@@ -77,6 +77,12 @@ Route::prefix('guru')->middleware(['throttle:100,1', 'service.auth'])->group(fun
 });
 
 
+Route::prefix('admin')->middleware(['throttle:100,1', 'service.auth'])->group(function () {
+    Route::get('muridall', [UserProfileController::class, 'getAll']);
+});
+
+
+
 Route::prefix('kegiatanbelajar')->middleware(['throttle:100,1', 'service.auth'])->group(function () {
     Route::get('daftarkegiatanbelajar/{idbookingprivate}', [ServiceCommunicationController::class, 'getAllKegiatanBelajar'])
          ->where('idbookingprivate', '[0-9a-fA-F\-]+');

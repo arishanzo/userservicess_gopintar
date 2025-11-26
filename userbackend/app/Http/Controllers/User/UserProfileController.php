@@ -19,11 +19,12 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class UserProfileController extends Controller
 {
-    
     public function getAll () {
+        $getAll = ProfilUser::with('User_Login')->get();
 
-        return ProfilUser::all();
-
+           return response()->json([
+            'data' => $getAll,
+        ]);
     }
 
     public function getByID ($iduser) {
