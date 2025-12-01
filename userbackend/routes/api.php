@@ -71,7 +71,7 @@ Route::get('/hello', function () {
 
 Route::prefix('guru')->middleware(['throttle:100,1', 'service.auth'])->group(function () {
     Route::get('daftarguru', [ServiceCommunicationController::class, 'getAllGurus']);
-       Route::get('/bookingguru/{idProfilGuru}', [BookingController::class, 'bookingGetGuru']);
+       Route::get('/bookingguru/{idprofilguru}', [BookingController::class, 'bookingGetGuru']);
        Route::put('/putbookingguru/{idBookingPrivate}', [BookingController::class, 'bookingPutGuru']);
        Route::put('/puttglbooking/{idtglbooking}', [BookingController::class, 'updateNextDays']);
 });

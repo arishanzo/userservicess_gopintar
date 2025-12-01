@@ -20,7 +20,7 @@ export const UseGetBooking = (iduser) => {
     
             setLoading(true);
             const Bookingget = await getFetchCache( () => getBooking(iduser), 5, 3000);
-            if (isMounted) setBooking(Bookingget.data || []);
+            if (isMounted) setBooking(Bookingget.data || null);
     
           } catch (error) {
     

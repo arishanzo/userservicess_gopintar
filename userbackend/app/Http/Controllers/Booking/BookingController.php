@@ -14,7 +14,7 @@ class BookingController extends Controller
     public function bookingGet($iduser){
 
 
-           $booking = Booking::with('User_Login', 'Tgl_Booking_Kelas')->where('iduser', $iduser)->get();
+           $booking = Booking::with('User_Login', 'Tgl_Booking_Kelas')->where('iduser', $iduser)->first();
          
 
              return response()->json([
@@ -27,15 +27,15 @@ class BookingController extends Controller
     }
 
 
-    public function bookingGetGuru($idProfilGuru){
+    public function bookingGetGuru($idprofilguru){
 
 
-       $booking =  Booking::with('Tgl_Booking_Kelas')->where('idprofilguru', $idProfilGuru)->get();
+       $booking =  Booking::with('Tgl_Booking_Kelas')->where('idprofilguru', $idprofilguru)->get();
        
      return response()->json([
             'status' => 200,
             'data' => $booking,
-            'message' => $booking ? 'Bookinf Ada' : 'Booking Tidak Ada'
+            'message' => $booking ? 'Booking Ada' : 'Booking Tidak Ada'
         ]);
 
        

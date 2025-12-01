@@ -6,8 +6,7 @@ import ModalVideo from "../../showmodal/ModalVideo";
 import ModalImage from "../../showmodal/ModalImage";
 
 const KelasAktif = ({ booking }) => {
-
-    
+ console.log('Booking di KelasAktif:', booking);
       const { guru, loading } = UseGetGuru();
       const  {kegiatanBelajar, loadingKegiatanBelajar } = UseGetKegiatanBelajar(booking?.idbookingprivate);
      
