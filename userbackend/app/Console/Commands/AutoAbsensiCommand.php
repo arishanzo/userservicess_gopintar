@@ -23,15 +23,15 @@ class AutoAbsensiCommand extends Command
 
         foreach ($pastBookings as $booking) {
             // Check if absensi already exists
-           $existingAbsensi = DB::connection('gurugopintar_db')->table('absensi')
+           $existingAbsensi = DB::connection('gurugopintar_db')->table('absensiguru')
                 ->where('idtglbooking', $booking->idtglbooking)
                 ->exists();
 
 
             if (!$existingAbsensi) {
                 // Create auto absensi
-                DB::connection('gurugopintar_db')->table('absensi')->insert([
-                    'idabsensi' => (string) \Illuminate\Support\Str::uuid(),
+                DB::connection('gurugopintar_db')->table('absensiguru')->insert([
+                    'idabsensiguru' => (string) \Illuminate\Support\Str::uuid(),
                     'idtglbooking' => $booking->idtglbooking,
                     'idprofilguru' => $booking->idprofilguru,
                     'tanggal' => $booking->tglbooking,

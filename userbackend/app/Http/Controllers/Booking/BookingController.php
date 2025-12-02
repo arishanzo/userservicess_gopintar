@@ -14,7 +14,7 @@ class BookingController extends Controller
     public function bookingGet($iduser){
 
 
-           $booking = Booking::with('User_Login', 'Tgl_Booking_Kelas')->where('iduser', $iduser)->first();
+           $booking = Booking::with('User_Login', 'Tgl_Booking_Kelas')->where('iduser', $iduser)->get();
          
 
              return response()->json([

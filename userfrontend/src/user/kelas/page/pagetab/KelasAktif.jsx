@@ -8,12 +8,12 @@ import ModalImage from "../../showmodal/ModalImage";
 const KelasAktif = ({ booking }) => {
  console.log('Booking di KelasAktif:', booking);
       const { guru, loading } = UseGetGuru();
-      const  {kegiatanBelajar, loadingKegiatanBelajar } = UseGetKegiatanBelajar(booking?.idbookingprivate);
+      const  {kegiatanBelajar, loadingKegiatanBelajar } = UseGetKegiatanBelajar(booking[0]?.idbookingprivate);
      
 
 
       const datamentor = Array.isArray(guru) 
-        ? guru.find(mentor => mentor.idprofilguru === booking?.idprofilguru)
+        ? guru.find(mentor => mentor.idprofilguru === booking[0]?.idprofilguru)
         : null;
 
         
@@ -98,7 +98,7 @@ const KelasAktif = ({ booking }) => {
              <p className="text-gray-500 text-sm flex items-center gap-2 mb-2">
                 Nama Kelas
              </p>
-          <h1 className=" text-xl font-bold text-green-800 mb-4">{booking?.mapeldipilih}</h1>
+          <h1 className=" text-xl font-bold text-green-800 mb-4">{booking[0]?.mapeldipilih}</h1>
           <p className="text-gray-500 text-sm flex items-center gap-2 mb-2">
 
             <Users size={18} /> Max 1 - 3 Siswa
@@ -113,26 +113,26 @@ const KelasAktif = ({ booking }) => {
 
         <div className=" gap-3">
         
-        {booking?.statusbooking === 'Belum Mulai' ? (
+        {booking[0]?.statusbooking === 'Belum Mulai' ? (
           <div className="bg-red-100 py-1 rounded-full p-2 text-xs text-center font-semibold md:px-6 mb-4 text-base text-red-700 mb-3" role="alert">
-         {booking?.statusbooking}
+         {booking[0]?.statusbooking}
           </div>
-        ) : booking?.statusbooking === 'Sudah Mulai' ? (
+        ) : booking[0]?.statusbooking === 'Sudah Mulai' ? (
           <div className="bg-yellow-100 py-1 rounded-full p-2 text-center font-semibold md:px-6 mb-4 text-base text-yellow-700 mb-3" role="alert">
-         {booking?.statusbooking}
+         {booking[0]?.statusbooking}
           </div>
-        ) :booking?.statusbooking === 'Selesai' &&  (
+        ) :booking[0]?.statusbooking === 'Selesai' &&  (
               <div class="bg-green-100 py-1  rounded-full p-2 text-center md:px-6 mb-4 text-base text-green-700 mb-3" role="alert">
-         {booking?.statusbooking}
+         {booking[0]?.statusbooking}
        </div>
           
         )}
         
-      { booking?.statusbooking === 'Belum Mulai' ? (
+      { booking[0]?.statusbooking === 'Belum Mulai' ? (
           <button className="bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors duration-200">
             Hubungi Guru
           </button>
-        ) : booking?.statusbooking === 'Sudah Mulai' && (
+        ) : booking[0]?.statusbooking === 'Sudah Mulai' && (
            <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors duration-200">
             Contact Guru
           </button>
@@ -141,9 +141,9 @@ const KelasAktif = ({ booking }) => {
 
       </div>
 
-     { booking?.statusbooking === 'Belum Mulai' && (
+     {booking[0]?.statusbooking === 'Belum Mulai' && (
         <p className="text-green-600 bg-green-50 p-4 md:text-sm  text-xs flex items-center mb-2">
-          *Menunggu Komfirmasi Guru, Anda Bisa Klik Tombol Hubungi Guru Untuk <p className="font-bold px-1"> Komfirmasi</p>
+          *Menunggu Komfirmasi Guru, Anda Bisa Klik Tombol Hubungi Guru Untuk <span className="font-bold px-1"> Komfirmasi</span>
         </p>
      )}
 
