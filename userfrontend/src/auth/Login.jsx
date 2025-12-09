@@ -5,6 +5,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axiosClient from "../lib/axios";
 import { useAuth } from "../context/AuthContext";
 import UsePageLoading from "../hook/usePageLoading";
+import { ArrowLeftIcon } from "lucide-react";
 
 const Login = () => {
   const { pageLoading } = UsePageLoading();
@@ -111,9 +112,18 @@ const Login = () => {
 
 
     if (pageLoading) {
-    return <div className="min-h-screen flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-                </div>
+    return   <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-greem-50 to-green-100">
+            <div className="relative">
+                <div className="w-16 h-16 border-4 border-green-200 border-t-green-600 rounded-full animate-spin"></div>
+                <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-r-green-600 rounded-full animate-spin" style={{animationDirection: 'reverse', animationDuration: '1.5s'}}></div>
+            </div>
+            <div className="mt-6 text-center">
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-green-600 to-green-600 bg-clip-text text-transparent animate-pulse">
+                    Go-Pinta
+                </h2>
+                <p className="text-gray-600 mt-2 animate-pulse">Memuat...</p>
+            </div>
+        </div>
     }
 
     return (
@@ -129,7 +139,7 @@ const Login = () => {
             >
        
               <span className="text-2xl w-10 h-10 mr-2">
-              ⭠
+             <ArrowLeftIcon />
               </span>
             </a>
           </div>

@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\SyncMidtransStatus::class,
-        \App\Console\Commands\AutoAbsensiCommand::class,
+        // \App\Console\Commands\AutoAbsensiCommand::class,
     ];
 
     /**
@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
         PasswordResetTokens::where('expires_at', '<', now())->delete();
          })->hourly();
 
-     $schedule->command('absensi:auto')->daily();
+    //  $schedule->command('absensi:auto')->daily();
      $schedule->command('midtrans:sync-status')->everyThirtyMinutes();
     }
 

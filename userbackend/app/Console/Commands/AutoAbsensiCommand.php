@@ -15,19 +15,39 @@ class AutoAbsensiCommand extends Command
         $this->info('Starting auto absensi process...');
 
         // Get past bookings without absensi
-        $pastBookings = DB::table('tglbooking')
-            ->where('tglbooking', '<', now()->toDateString())
-            ->get();
+        // $pastBookings = DB::table('tglbooking')
+        //     ->where('tglbooking', '<', now()->toDateString())
+        //     ->get();
+
+        $tglBookingTerbaru = DB::table('tglbooking')->max('tglbooking');
+        $dateDiff = now()->diffInDays($tglBookingTerbaru);
+     
+        $dayCounterTglBookingTerbaru = 0;
+
+
 
         $processedBookings = [];
 
-        foreach ($pastBookings as $booking) {
-            // Check if absensi already exists
-           $existingAbsensi = DB::connection('gurugopintar_db')->table('absensiguru')
-                ->where('idtglbooking', $booking->idtglbooking)
+        // foreach ($pastBookings as $booking) {
+
+        for ($i = 1; $i <= $dateDiff; $i++) {
+        
+            echo "Hari ke-$i sejak latestBooking<br>";
+         
+        // dia hitung tanggal berikutnya dari tglBookingTerbaru
+         $nextDateTglBooking = date('Y-m-d', strtotime($tglBookingTerbaru . ' +' . $dayCounterTglBookingTerbaru . ' day'));
+
+        // cek apakah absensi sudah ada untuk tglbooking tersebut
+        $existingAbsensi = DB::connection('gurugopintar_db')->table('absensiguru')
+                ->where('idtglbooking', $nextDateTglBooking)
                 ->exists();
 
+        // ambil data booking untuk tanggal berikutnya
+        $booking = DB::table('tglbooking')
+                ->where('tglbooking', $nextDateTglBooking)
+                ->first();
 
+        // jika absensi belum ada, buat absensi otomatis
             if (!$existingAbsensi) {
                 // Create auto absensi
                 DB::connection('gurugopintar_db')->table('absensiguru')->insert([
@@ -44,19 +64,26 @@ class AutoAbsensiCommand extends Command
                 $this->info("Created absensi for booking: {$booking->idtglbooking}");
                 $processedBookings[] = $booking;
             }
-        }
 
-        // Create new bookings with different dates for each processed booking
+            $dayCounterTglBookingTerbaru++;
+        
+
+        // buat booking baru untuk hari berikutnya berdasarkan booking yang sudah diproses
         if (!empty($processedBookings)) {
+
+            //  ambil tanggal booking terbaru
             $latestBooking = DB::table('tglbooking')
                 ->orderBy('tglbooking', 'desc')
                 ->first();
 
+        //  latestBooking aada isinya
             if ($latestBooking) {
                 $baseDate = $latestBooking->tglbooking;
                 $dayCounter = 1;
 
+                //  maka akan buat booking baru untuk hari-hari berikutnya
                 foreach ($processedBookings as $booking) {
+
                     $nextDate = date('Y-m-d', strtotime($baseDate . ' +' . $dayCounter . ' day'));
 
                     DB::table('tglbooking')->insert([
@@ -76,7 +103,7 @@ class AutoAbsensiCommand extends Command
                 }
             }
         }
-
+    }
         $this->info('Auto absensi process completed!');
     }
 }
