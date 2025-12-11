@@ -8,45 +8,40 @@ export const UseGetTugasKelas = (idbookingprivate) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    let isMounted = true;
+   
+    const controller = new AbortController();
 
     const fetchTugasKelas = async () => {
       try {
 
         setLoadingTugasKelas(true);
-        const result = await getFetchCache( () => getTugasKelasServices(idbookingprivate), 5, 3000);
+        const result = await getFetchCache( () => getTugasKelasServices(idbookingprivate, { signal: controller.signal }), 5, 3000);
     
-        if (isMounted) setTugasKelas(result.data || []);
+        setTugasKelas(result.data || []);
 
-      } catch (error) {
+        } catch (error) {
 
-        if (isMounted) {
-          if (error?.response?.status === 404) {
-            setTugasKelas(null);
-          } else {
-            setError(
-              error?.response?.data?.message ||
-                error?.message ||
-                "Gagal memuat Tugas Kelas"
-            );
-          }
-        }
+      if (error.name === "AbortError") return; 
+
+        if (error?.response?.status === 404) {
+        setTugasKelas(null);
+      } else {
+        setError(error?.response?.data?.message || error.message);
+      }
 
       } finally {
-        if (isMounted) setLoadingTugasKelas(false);
+        setLoadingTugasKelas(false);
       }
 
     };
 
-    const timer = setTimeout(() => {
       fetchTugasKelas();
-    }, 100);
 
-    return () => {
-      isMounted = false;
-      clearTimeout(timer);
-    };
-  }, []);
+
+   
+    return () => controller.abort();
+    
+  }, [idbookingprivate]);
 
   return { tugasKelas, loadingTugasKelas, error };
 };

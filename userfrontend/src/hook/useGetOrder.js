@@ -9,7 +9,10 @@ export const UseGetOrder = (iduser) => {
     const [result, setResult] = useState(null);
 
       useEffect(() => {
-        let isMounted = true;
+
+        
+    const controller = new AbortController();
+
         if (!iduser) {
           setLoading(false);
           return;
@@ -19,37 +22,30 @@ export const UseGetOrder = (iduser) => {
           try {
     
             setLoading(true);
-            const resultget = await getFetchCache( () => getOrder(iduser), 5, 3000);
-            if (isMounted) setResult(resultget || null);
+            const resultget = await getFetchCache( () => getOrder(iduser, { signal: controller.signal }), 5, 3000);
+            setResult(resultget || null);
     
-          } catch (error) {
-    
-            if (isMounted) {
-              if (error?.response?.status === 404) {
-                setResult(null);
-              } else {
-                setError(
-                  error?.response?.data?.message ||
-                    error?.message ||
-                    "Gagal memuat Order"
-                );
-              }
-            }
-    
-          } finally {
-            if (isMounted) setLoading(false);
+       } catch (error) {
+
+      if (error.name === "AbortError") return; 
+
+        if (error?.response?.status === 404) {
+        setResult(null);
+      } else {
+        setError(error?.response?.data?.message || error.message);
+      }
+
+      } finally {
+          setLoading(false);
           }
     
         };
     
-        const timer = setTimeout(() => {
+       
           fetchOrder();
-        }, 100);
-    
-        return () => {
-          isMounted = false;
-          clearTimeout(timer);
-        };
+      
+     return () => controller.abort();
+
       }, [iduser]);
     
       return { result, loading, error };

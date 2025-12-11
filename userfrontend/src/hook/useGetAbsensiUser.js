@@ -8,7 +8,9 @@ export const UseGetAbsensiUser = (iduser) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    let isMounted = true;
+    
+    const controller = new AbortController();
+
     if (!iduser) {
       setLoading(false);
       return;
@@ -18,37 +20,31 @@ export const UseGetAbsensiUser = (iduser) => {
       try {
 
         setLoading(true);
-        const result = await getFetchCache( () => getAbsensiUser(iduser), 5, 3000);
-        if (isMounted) setAbsensiUser(result.data || []);
+        const result = await getFetchCache( () => getAbsensiUser(iduser, { signal: controller.signal }), 5, 3000);
+        setAbsensiUser(result.data || []);
 
-      } catch (error) {
+       } catch (error) {
 
-        if (isMounted) {
-          if (error?.response?.status === 404) {
-            setAbsensiUser([]);
-          } else {
-            setError(
-              error?.response?.data?.message ||
-                error?.message ||
-                "Gagal memuat profil"
-            );
-          }
-        }
+      if (error.name === "AbortError") return; 
+
+        if (error?.response?.status === 404) {
+        setAbsensiUser(null);
+      } else {
+        setError(error?.response?.data?.message || error.message);
+      }
 
       } finally {
-        if (isMounted) setLoading(false);
+        setLoading(false);
       }
 
     };
 
-    const timer = setTimeout(() => {
+   
       fetchabsensi();
-    }, 100);
 
-    return () => {
-      isMounted = false;
-      clearTimeout(timer);
-    };
+  
+    return () => controller.abort();
+    
   }, [iduser]);
 
   return { absensiUser, loading, error };

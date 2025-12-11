@@ -8,45 +8,38 @@ export const UseGetKegiatanBelajar = (idbookingprivate) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    let isMounted = true;
+   
+    const controller = new AbortController();
 
     const fetchKegiatanBelajar = async () => {
       try {
 
         setLoadingKegiatanBelajar(true);
-        const result = await getFetchCache( () => getKegiatanBelajarServices(idbookingprivate), 5, 3000);
+        const result = await getFetchCache( () => getKegiatanBelajarServices(idbookingprivate, { signal: controller.signal }), 5, 3000);
     
-        if (isMounted) setKegiatanBelajar(result.data || []);
+        setKegiatanBelajar(result.data || []);
 
-      } catch (error) {
+       } catch (error) {
 
-        if (isMounted) {
-          if (error?.response?.status === 404) {
-            setKegiatanBelajar(null);
-          } else {
-            setError(
-              error?.response?.data?.message ||
-                error?.message ||
-                "Gagal memuat Kegiatan Belajar"
-            );
-          }
-        }
+      if (error.name === "AbortError") return; 
+
+        if (error?.response?.status === 404) {
+        setKegiatanBelajar(null);
+      } else {
+        setError(error?.response?.data?.message || error.message);
+      }
 
       } finally {
-        if (isMounted) setLoadingKegiatanBelajar(false);
+        setLoadingKegiatanBelajar(false);
       }
 
     };
 
-    const timer = setTimeout(() => {
       fetchKegiatanBelajar();
-    }, 100);
 
-    return () => {
-      isMounted = false;
-      clearTimeout(timer);
-    };
-  }, []);
+    return () => controller.abort();
+
+  }, [idbookingprivate]);
 
   return { kegiatanBelajar, loadingKegiatanBelajar, error };
 };

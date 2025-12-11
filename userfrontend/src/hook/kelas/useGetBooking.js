@@ -9,7 +9,8 @@ export const UseGetBooking = (iduser) => {
     const [booking, setBooking] = useState(null);
 
       useEffect(() => {
-        let isMounted = true;
+       const controller = new AbortController();
+    
         if (!iduser) {
           setLoading(false);
           return;
@@ -19,37 +20,31 @@ export const UseGetBooking = (iduser) => {
           try {
     
             setLoading(true);
-            const Bookingget = await getFetchCache( () => getBooking(iduser), 5, 3000);
-            if (isMounted) setBooking(Bookingget.data || null);
+            const Bookingget = await getFetchCache( () => getBooking(iduser, { signal: controller.signal }), 5, 3000);
+             setBooking(Bookingget.data || null);
     
-          } catch (error) {
-    
-            if (isMounted) {
-              if (error?.response?.status === 404) {
-                setBooking(null);
-              } else {
-                setError(
-                  error?.response?.data?.message ||
-                    error?.message ||
-                    "Gagal memuat Booking"
-                );
-              }
-            }
-    
-          } finally {
-            if (isMounted) setLoading(false);
+            } catch (error) {
+
+      if (error.name === "AbortError") return; 
+
+        if (error?.response?.status === 404) {
+        setBooking(null);
+      } else {
+        setError(error?.response?.data?.message || error.message);
+      }
+
+      } finally {
+            setLoading(false);
           }
     
         };
     
-        const timer = setTimeout(() => {
-          fetchBooking();
-        }, 100);
     
-        return () => {
-          isMounted = false;
-          clearTimeout(timer);
-        };
+          fetchBooking();
+      
+    
+        return () => controller.abort();
+        
       }, [iduser]);
     
       return { booking, loading, error };
