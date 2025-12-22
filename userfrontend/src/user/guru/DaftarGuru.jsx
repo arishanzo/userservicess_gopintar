@@ -1,100 +1,114 @@
 
-import { useState, useEffect} from "react"
+
 import { useNavigate } from "react-router-dom";
 import CryptoJS from 'crypto-js';
+import {  useEffect, useRef, useState } from 'react';
 import { UseGetGuru } from "../../hook/useGetGuru";
 import { UseGetBooking } from "../../hook/kelas/useGetBooking";
+import { UseGetProfil } from "../../hook/useGetProfil";
 
-// Komponen untuk menampilkan nama kabupaten
-const KabupatenName = ({ kabupatenId }) => {
-  const [kabupatenName, setKabupatenName] = useState("Lokasi");
+
+const DesaName = ({ desaId, kecamatanId }) => {
+  const [desaName, setDesaName] = useState("Lokasi");
 
  
   useEffect(() => {
-    if (kabupatenId) {
-      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regency/${kabupatenId}.json`)
+    if (desaId) {
+      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`)
         .then(res => res.json())
-        .then(data => setKabupatenName(data.name || "Lokasi"))
-        .catch(() => setKabupatenName("Lokasi"));
+        .then(data => setDesaName(data.find(item => item.id === desaId).name || "Lokasi"))
+        .catch(() => setDesaName("Lokasi"));
     }
-  }, [kabupatenId]);
+  }, [desaId, kecamatanId]);
   
-  return <span>{kabupatenName}</span>;
+  return <span>{desaName}</span>;
   
 };
 
-const DaftarGuru = ({result}) => {
 
-  const { guru } = UseGetGuru();
-  const { booking } = UseGetBooking(result?.iduser || '');
+const DaftarGuru = ( { result }) => {
+
+
+  const scrollRef = useRef(null);
   
-  const Navigate = useNavigate();
 
   const [showModal, setShowModal] = useState(false);
   
   const [showModalBooking, setShowModalBooking] = useState(false);
 
+  const { profil } = UseGetProfil(result?.iduser || '');
+  const { guru } = UseGetGuru();
+  const { booking } = UseGetBooking(result?.iduser || '');
 
-     const handleRedirectToPembayaran = () => {
+   const Navigate = useNavigate();
+
+   const handleRedirectToPembayaran = () => {
         setShowModal(false);
         Navigate('/berlangganan');
-    };
-
-     const handleRedirectToKelas = () => {
-        setShowModal(false);
-        Navigate('/kelas');
     };
   
      const handleRedirectToGuru = () => {
         setShowModal(false);
         Navigate('/kelas/buatkelas');
     };
+
+    
+     const handleRedirectToKelas = () => {
+        setShowModal(false);
+        Navigate('/kelas');
+    };
   
-    const handleSubmit = async (idprofilguru) => {
-      const secretKey = 'gopintarguru2025';
-      const encrypted = CryptoJS.AES.encrypt(idprofilguru, secretKey).toString();
-
-      const selectedGuruId = sessionStorage.getItem('selectedGuruId', encrypted);
-
-        if(result.statuspembayaran === 'pending' || result.statuspembayaran === 'expire' || !result ){
-          
-          setShowModal(true);
-        }else if (booking.length > 0) {
-           setShowModalBooking(true);
-        }else if (selectedGuruId) {
-           setShowModal(true);
-        }else{
-        sessionStorage.setItem('selectedGuruId', encrypted);
-        
-        Navigate('/kelas/buatkelas');
-        }
-      }
+    
+      const handleSubmit = async (idprofilguru) => {
+           const secretKey = 'gopintarguru2025';
+           const encrypted = CryptoJS.AES.encrypt(idprofilguru, secretKey).toString();
+         
+           const selectedGuruId = sessionStorage.getItem('selectedGuruId', encrypted);
+     
+             if(result.statuspembayaran === 'pending' || result.statuspembayaran === 'expire' || !result ){
+               
+               setShowModal(true);
+             }else if (booking.length > 0) {
+                setShowModalBooking(true);
+             }else if (selectedGuruId) {
+                setShowModal(true);
+             }else{
+             sessionStorage.setItem('selectedGuruId', encrypted);
+             
+             Navigate('/kelas/buatkelas');
+             }
+           }
+     
+  const guruTerdekat = guru?.filter(g => g.kecamatan === profil?.kecamatan);
 
     return (
 
         <>
 
 
-<div class=" md:py-16 sm:py-8 lg:py-12 pt-2  overflow-x-hidden" id='mentor'>
+<div className="pt-2 md:py-2 sm:py-8    overflow-x-hidden" id='mentor'>
   
-    <div class="mx-auto px-2 "  >
-        <div className="mb-4 text-center md:px-8">
-            <div className="flex items-center justify-between gap-12 mb-2">
-               <h2 className="text-xl font-bold text-green-800 lg:text-xl">👨‍🏫 Daftar Guru</h2>               
-           </div>
-        </div>
-        </div>
-
-
-
-    <div className="md:px-8">
-      <div 
-        className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-5"
-       
+ <div className="mx-auto py-8 px-2 md:px-8">
+  <div className="mb-2 text-center">
+    <div className="flex items-center justify-between gap-12">
+      <h2 className="text-xl font-bold text-green-800 lg:text-xl">
+        👨‍🏫 Guru Terdekat
+      </h2>
+      <a
+        href="/guru"
+        className="text-gray-400 font-underline text-sm font-semibold py-1 px-4"
       >
-        {/* Loading state */}
+        Lihat Guru Lain
+      </a>
+
+    </div>
+  </div>
+
+
+
+  {/* Loading state */}
         {!guru ? (
-           <div className="flex gap-16 pt-2 ">
+          <div className="flex gap-12 pt-2 overflow-x-auto">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="flex-shrink-0 w-40 py-4">
                 <div className="bg-white rounded-xl shadow-lg">
@@ -113,11 +127,19 @@ const DaftarGuru = ({result}) => {
             <p className="text-gray-500">Tidak ada guru ditemukan</p>
           </div>
         ) : (
-          guru.map((mentor, i) => (
-          <div key={i} className="relative group flex-shrink-0 w-40 py-2 p-2 md:p-0">
+
+    <div className="">
+      <div 
+        ref={scrollRef}
+        className="flex gap-8 pt-2 overflow-x-auto scrollbar-hide cursor-grab scroll-smooth focus:outline-none"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        tabIndex={0}
+      >
+        {guruTerdekat.map((mentor, i) => (
+          <div key={i} className="relative group flex-shrink-0 w-40 py-4 ">
             <div className="relative overflow-hidden group bg-white rounded-xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl duration-300">
               <div className="bg-gray-200 rounded-xl overflow-hidden relative h-40 w-40">
-                <img 
+               <img 
                   src={mentor.foto_profil ? `http://localhost:8000/api/photosuser/${encodeURIComponent(mentor.foto_profil)}` : 'https://via.placeholder.com/300'}
                   alt={mentor.user_guru?.name || "Mentor"}
                   className="w-full h-full object-cover object-center"
@@ -129,35 +151,33 @@ const DaftarGuru = ({result}) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-green-700 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
               <div className="p-4">
-                <h3 className="text-xs font-semibold mb-2">{mentor.user_guru?.name || "Mentor Name"}</h3>
+                 <h3 className="text-xs font-semibold mb-2">{mentor.user_guru?.name || "Mentor Name"}</h3>
                 <p className="text-green-600 font-bold text-sm mb-2">{mentor?.mapel || "Subject Expert"}</p>
                 <span  className="text-gray-500  font-semibold text-xs">Lokasi:</span>
-                <p className="text-gray-500  text-xs "><KabupatenName kabupatenId={mentor?.kabupaten} /></p>
+                <p className="text-gray-500  text-xs ">DESA <DesaName desaId={mentor?.kelurahan} kecamatanId={mentor?.kecamatan} /></p>
               </div>
-              <div className="absolute bottom-0 left-0 right-0 bg-white p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out shadow-lg rounded-t-lg">
+             <div className="absolute bottom-0 left-0 right-0 bg-white p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out shadow-lg rounded-t-lg">
                 <p className="text-sm text-gray-700 mb-3">
-                  {mentor?.aboutguru || "Experienced mentor with years of teaching expertise."}
+                  {mentor.text || "Experienced mentor with years of teaching expertise."}
                 </p>
-               <button 
+                <button 
                 type="button"
-                onClick={() => handleSubmit(mentor?.idprofilguru || '')}
+                onClick={() => handleSubmit(mentor?.iduser || '')}
                 className="w-full bg-green-600 hover:bg-green-700 text-white text-xs py-2 px-3 rounded-lg transition-colors duration-200">
-                  Pilih Guru
+                  Pilih Guru 
                 </button>
               </div>
             </div>
           </div>
-        ))
-        )}
-
-
-
-        
+        ))}
       </div>
     </div>
 
+      )}
 
-     {/* Modal Popup */}
+  {/* End Loading state */}
+
+    {/* Modal Popup */}
             {showModal && (
                 <div 
                     className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
@@ -203,7 +223,7 @@ const DaftarGuru = ({result}) => {
             )}
 
 
-             {/* Modal Popup */}
+     {/* Modal Popup */}
             {showModalBooking && (
                <div 
   className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
@@ -255,9 +275,10 @@ const DaftarGuru = ({result}) => {
 
             )}
 
-
-
 </div>
+
+
+</div>   
 
 
       

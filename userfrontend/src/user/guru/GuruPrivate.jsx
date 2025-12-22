@@ -26,7 +26,8 @@ const KabupatenName = ({ kabupatenId }) => {
 };
 
 
-const GuruPrivate = ( { result }) => {
+const GuruPrivate = ( { result, }) => {
+   const [kategori, setKategori] = useState("Filter");
 
 
   const scrollRef = useRef(null);
@@ -40,8 +41,29 @@ const GuruPrivate = ( { result }) => {
     const { guru } = UseGetGuru();
     const { booking } = UseGetBooking(result?.iduser || '');
 
-   const Navigate = useNavigate();
 
+  const queryParams = new URLSearchParams(window.location.search);
+ const query = queryParams.get('cariguru') || '';
+   
+
+  const hasilFilter = query
+    ? guru?.filter(mentor =>
+        mentor.user_guru?.name?.toLowerCase().includes(query.toLowerCase()) ||
+        (mentor.mapel && Array.isArray(mentor.mapel) && mentor.mapel.some(mp => mp?.toLowerCase().includes(query.toLowerCase())))
+      )
+    : guru?.filter(mentor => 
+        kategori === "Filter" 
+          ? true
+          : mentor.kategori === kategori
+      );
+
+   const Navigate = useNavigate();
+ 
+ 
+   const kembali = () => {
+    Navigate(-1);
+    setKategori("Filter");
+   };
 
      const handleRedirectToPembayaran = () => {
         setShowModal(false);
@@ -86,23 +108,33 @@ const GuruPrivate = ( { result }) => {
         <>
 
 
-<div class="pt-2 md:py-2 sm:py-8    overflow-x-hidden" id='mentor'>
-  
- <div className="mx-auto py-8 px-2 md:px-8">
-  <div className="mb-2 text-center">
-    <div className="flex items-center justify-between gap-12">
-      <h2 className="text-xl font-bold text-green-800 lg:text-xl">
-        👨‍🏫 Guru Terdekat
-      </h2>
-      <a
-        href="/guru"
-        className="text-gray-400 font-underline text-sm font-semibold py-1 px-4"
-      >
-        Lihat Guru Lain
-      </a>
+<div className="pt-2 md:py-2 sm:py-8 overflow-x-hidden" id='mentor'>
+   <div className="mx-auto py-8 px-2 md:px-8">
+      <div className="mb-2 text-center">
+        <div className="flex items-center justify-between gap-12">
+          <h2 className="text-xl font-bold text-green-800 lg:text-xl">
+            👨‍🏫 Daftar Guru
+          </h2>
 
-    </div>
-  </div>
+          {/* Dropdown */}
+          <div className="relative">
+            <select
+              value={kategori}
+              onChange={(e) => setKategori(e.target.value)}
+               className="px-4 py-2 border rounded-lg bg-white shadow focus:ring-1 focus:ring-green-500 focus:border-green-500 w-[100px]"
+>
+
+                <option disabled>{kategori}</option>
+             <option value="Fokus Akademik Umum (SD, SMP, SMA)">Fokus Akademik Umum (SD, SMP, SMA)</option>
+                        <option value="Persiapan Ujian & Tes Khusus">Persiapan Ujian & Tes Khusus</option>
+                        <option value="Keterampilan & Mapel Non-Akademik"> Keterampilan & Mapel Non-Akademik</option>
+                        <option value="Pendekatan Belajar Khusus">Pendekatan Belajar Khusus</option>
+                        <option value="Lainnya">Lainnya</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
 
 
 
@@ -135,7 +167,43 @@ const GuruPrivate = ( { result }) => {
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         tabIndex={0}
       >
-        {guru.map((mentor, i) => (
+        {hasilFilter.length === 0 ? (
+          <div className="w-full flex flex-col items-center justify-center py-16 px-4">
+            <div className=" rounded-2xl p-8 max-w-md w-full text-center">
+              <div className="mb-6">
+                <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                  <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Guru Tidak Ditemukan</h3>
+                <p className="text-gray-500 text-sm mb-6">Tidak ada guru yang sesuai dengan pencarian "{query}"</p>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => window.location.reload()}
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  Reload
+                </button>
+                <button
+                  onClick={() => kembali()}
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                  </svg>
+                  Kembali
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
+        {hasilFilter.map((mentor, i) => (
           <div key={i} className="relative group flex-shrink-0 w-40 py-4 ">
             <div className="relative overflow-hidden group bg-white rounded-xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl duration-300">
               <div className="bg-gray-200 rounded-xl overflow-hidden relative h-40 w-40">
@@ -170,10 +238,13 @@ const GuruPrivate = ( { result }) => {
             </div>
           </div>
         ))}
+        </>
+            )}
       </div>
     </div>
 
       )}
+    
 
   {/* End Loading state */}
 

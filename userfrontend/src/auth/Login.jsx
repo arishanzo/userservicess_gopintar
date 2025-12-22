@@ -51,7 +51,6 @@ const Login = () => {
    
       
     } catch (err) {
-      console.error("Login error:", err);
       const data = err.response?.data || {};
       setErrors(data.errors || { general: [data.message || "Login gagal."] });
       setStatus("Login gagal. Silakan coba lagi.");

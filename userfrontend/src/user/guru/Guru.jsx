@@ -7,14 +7,11 @@ import { useAuth } from "../../context/AuthContext";
 import Category from "../dashboard/Category";
 
 const Guru = () => {
-    const { user } = useAuth();
+ const { user } = useAuth();
  const { result, loading  } = UseGetOrder(user?.iduser);
-
-   
-  
+ 
 
 
-  
   return (
 
     <>
@@ -77,7 +74,7 @@ const Guru = () => {
          // Main content area 
                   <div className="w-full h-full py-16 p-4 sm:pt-28 ">
             <Category/>
-            <DaftarGuru  result={result}/>
+            <GuruPrivate  result={result} />
         </div>
 
        )}

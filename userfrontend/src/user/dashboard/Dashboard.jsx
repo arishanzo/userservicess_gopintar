@@ -220,8 +220,9 @@ const Dashboard = () => {
         ))}
       </div>
 
-       <Category />
-       
+         
+         <DaftarGuru result={result}/>
+          <Category />
             <GuruPrivate result={result} />
         </div>
 
