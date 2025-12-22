@@ -54,7 +54,7 @@ const GuruPrivate = ( { result, }) => {
     : guru?.filter(mentor => 
         kategori === "Filter" 
           ? true
-          : mentor.kategori === kategori
+          : mentor.bidangngajar === kategori
       );
 
    const Navigate = useNavigate();
