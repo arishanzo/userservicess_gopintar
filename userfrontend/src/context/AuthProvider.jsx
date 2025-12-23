@@ -13,14 +13,19 @@ export const AuthProvider = ({ children }) => {
     const controller = new AbortController();
     
     const fetchUser = async () => {
+
       if (user) return; // Skip jika user sudah ada
       
       try {
-        // Cek session dengan endpoint yang sudah ada
+        // Cek session dulu
+        await axiosClient.get("/sanctum/csrf-cookie", { signal: controller.signal });
+        
+        // Test session dengan endpoint yang tidak butuh auth
         const sessionCheck = await axiosClient.get("/api/check-session", { signal: controller.signal });
         
-        if (sessionCheck.data.authenticated && sessionCheck.data.user) {
-          setUser(sessionCheck.data.user);
+        if (sessionCheck.data.authenticated) {
+          const res = await axiosClient.get("/api/user", { signal: controller.signal });
+          setUser(res.data);
         } else {
           setUser(null);
         }
@@ -47,6 +52,7 @@ export const AuthProvider = ({ children }) => {
   };
 
    const logout = async () => {
+    localStorage.removeItem("photoprofil");
     await axiosClient.post("/api/logout");
     setUser(null);
   };

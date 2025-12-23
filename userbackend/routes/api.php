@@ -49,13 +49,13 @@ Route::post('/daftar', [AuthProsesController::class, 'register']);
 
 Route::post('/login', [AuthProsesController::class, 'login'])->name('login');
 
+
 Route::post('/logout', function (Request $request) {
     Auth::guard('web')->logout();
     $request->session()->invalidate();
     $request->session()->regenerateToken();
     return response()->json(['message' => 'Logout berhasil']);
 });
-
 
 
 

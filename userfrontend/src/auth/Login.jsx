@@ -92,22 +92,6 @@ const Login = () => {
     },
   });
 
-  // // Cleanup Google OAuth on unmount
-  // useEffect(() => {
-  //   return () => {
-  //     // Clean up any Google OAuth DOM elements
-  //     const googleElements = document.querySelectorAll('[id^="google"], [class*="google"]');
-  //     googleElements.forEach(element => {
-  //       try {
-  //         if (element.parentNode) {
-  //           element.parentNode.removeChild(element);
-  //         }
-  //       } catch (e) {
-  //         // Ignore errors during cleanup
-  //       }
-  //     });
-  //   };
-  // }, []);
 
 
     if (pageLoading) {

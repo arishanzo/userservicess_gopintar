@@ -13,7 +13,6 @@ const NavbarUser = () => {
   const [query, setQuery] = useState("");
 
 
-
   const fetchNotifications = async () => {
     if (!user?.iduser) return;
     
@@ -38,6 +37,7 @@ const NavbarUser = () => {
     }
   };
 
+
    const markAsDelete = async (iduser) => {
     try {
       await axiosClient.post(`/api/notifications/${iduser}/clear`, {});
@@ -51,14 +51,12 @@ const NavbarUser = () => {
   const [showProfile, setShowProfile] = useState(false);
   
 
-  const local =  localStorage.getItem("photoprofil")
 
- 
- 
+
 useEffect(() => {
-  fetchNotifications(); 
-}, [fetchNotifications]);
-
+  fetchNotifications();
+}, []);
+  
 
 
    const handleKeyDown = (e) => {
@@ -84,12 +82,6 @@ useEffect(() => {
                   onClick={() => setShowProfile(!showProfile)}
                   className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
-                <img
-                    className="h-12 w-12 rounded-full object-cover"
-                    src={ `${import.meta.env.VITE_API_URL}/api/photos/${encodeURIComponent(local)}`
-                    }
-                    alt="Profile"
-                  />
 
                   <div className="hidden md:block text-left">
                     <p className="text-sm font-medium text-gray-900">{user?.nama_user || "Guest"}</p>
