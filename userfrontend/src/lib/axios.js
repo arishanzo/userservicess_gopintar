@@ -61,7 +61,7 @@ export const serviceClient = {
       guru_id: guruId
     }, {
       headers: {
-        'X-Service-Key': 'gopintar-service-secret-2024'
+        'X-Service-Key': import.meta.env.VITE_SERVICE_KEY
       }
     });
   },
@@ -75,8 +75,8 @@ export const serviceClient = {
     });
   },
 
-  getAbsensiGuru: (idtglbooking) => {
-    return axiosClient.get(`/api/guru/daftarAbsensiGuru/${idtglbooking}`, {
+  getAbsensiGuru: (idprofilguru) => {
+    return axiosClient.get(`/api/guru/daftarabsensiguru/${idprofilguru}`, {
       headers: {
         'X-Service-Key': import.meta.env.VITE_SERVICE_KEY
       }

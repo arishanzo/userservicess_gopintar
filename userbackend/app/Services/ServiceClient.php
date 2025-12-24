@@ -95,6 +95,11 @@ public function call($service, $endpoint, $method = 'GET', $data = [], $headers 
         return $this->call('guruservices', "services/kegiatanbelajar/{$idbookingprivate}", 'GET');
     }
 
+      public function getAbsensiGuru($idprofilguru)
+    {
+        return $this->call('guruservices', "services/absensiguru/{$idprofilguru}", 'GET');
+    }
+
      public function getAllTugasKelas($idbookingprivate)
     {
         return $this->call('guruservices', "services/tugaskelas/{$idbookingprivate}", 'GET');

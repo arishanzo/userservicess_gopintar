@@ -2,7 +2,7 @@
 
 import { useNavigate } from "react-router-dom";
 import CryptoJS from 'crypto-js';
-import {  useEffect, useRef, useState } from 'react';
+import {  useEffect,  useState } from 'react';
 import { UseGetGuru } from "../../hook/useGetGuru";
 import { UseGetBooking } from "../../hook/kelas/useGetBooking";
 import { UseGetProfil } from "../../hook/useGetProfil";
@@ -11,15 +11,15 @@ import { UseGetProfil } from "../../hook/useGetProfil";
 
 
 const DesaName = ({ desaId, kecamatanId }) => {
-  const [desaName, setDesaName] = useState("Lokasi");
+  const [desaName, setDesaName] = useState("");
 
  
   useEffect(() => {
     if (desaId) {
       fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`)
         .then(res => res.json())
-        .then(data => setDesaName(data.find(item => item.id === desaId).name || "Lokasi"))
-        .catch(() => setDesaName("Lokasi"));
+        .then(data => setDesaName(data.find(item => item.id === desaId).name || ""))
+        .catch(() => setDesaName(""));
     }
   }, [desaId, kecamatanId]);
   
@@ -29,14 +29,14 @@ const DesaName = ({ desaId, kecamatanId }) => {
 
 
 const KabupatenName = ({ kecamatanId, kabupatenId }) => {
-  const [kecamatanName, setKecamatanName] = useState("Lokasi");
+  const [kecamatanName, setKecamatanName] = useState("");
 
  
   useEffect(() => {
     if (kabupatenId) {
       fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`)
         .then(res => res.json())
-        .then(data => setKecamatanName(data.find(item => item.id === kecamatanId).name || "Lokasi"))
+        .then(data => setKecamatanName(data.find(item => item.id === kecamatanId).name || ""))
         .catch(() => setKecamatanName(""));
     }
   }, [kabupatenId, kecamatanId]);
@@ -49,7 +49,7 @@ const KabupatenName = ({ kecamatanId, kabupatenId }) => {
 };
 
 
-const GuruPrivate = ( { result, }) => {
+const GuruPrivate = ( { result}) => {
    const [kategori, setKategori] = useState("Filter");
 
 
@@ -77,7 +77,6 @@ const GuruPrivate = ( { result, }) => {
     : guru?.filter(mentor =>mentor.kecamatan === profil?.kecamatan  && (kategori === "Filter" ? true : mentor.bidangngajar === kategori)
       );
  
-      console.log(hasilFilter)
 
    const Navigate = useNavigate();
  
@@ -188,7 +187,34 @@ const GuruPrivate = ( { result, }) => {
   {hasilFilter.length === 0 ? (
     <div className="col-span-full flex justify-center items-center py-16 px-4">
       <div className="rounded-2xl p-8 max-w-md w-full text-center">
-        {/* isi konten */}
+
+    {!query ? (
+      <>
+              <div className="mb-6">
+                <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                  <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Guru Tidak Ditemukan</h3>
+                <p className="text-gray-500 text-sm mb-6">Tidak ada guru yang sesuai dengan Lokasi Anda Saat Ini, Perbarui Lokasi Anda Di Menu Profil</p>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => Navigate('/profil')}
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  Perbarui Profil
+                </button>
+            
+              </div>
+</>
+
+    ) : (
+      <>
               <div className="mb-6">
                 <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                   <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -218,6 +244,10 @@ const GuruPrivate = ( { result, }) => {
                   Kembali
                 </button>
               </div>
+
+</>
+    )}
+       
             </div>
           </div>
         ) : (

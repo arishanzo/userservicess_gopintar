@@ -18,7 +18,7 @@ const categories = getDataCategoryBelajar();
   {categories.map(({ id, judul, icon, review }) => (
     <div
       key={id}
-      className="flex flex-col items-center p-6 rounded-3xl shadow-lg bg-green-50 border-gray-900 hover:scale-105 transform transition-transform duration-300 cursor-pointer"
+      className="flex flex-col items-center p-6 rounded-3xl shadow-lg bg-gray-50 border-gray-900 hover:scale-105 transform transition-transform duration-300 cursor-pointer"
     >
       <div className="mb-4 text-4xl md:text-4xl" aria-label={judul}>
         {icon}
@@ -48,7 +48,7 @@ const categories = getDataCategoryBelajar();
           
           <div
          
-            className={`flex flex-col items-center p-6 rounded-3xl shadow-lg bg-green-50 boder-gray-900 hover:scale-105 transform transition-transform duration-300 cursor-pointer h-full`}
+            className={`flex flex-col items-center p-6 rounded-3xl shadow-lg bg-gray-50 boder-gray-900 hover:scale-105 transform transition-transform duration-300 cursor-pointer h-full`}
           >
             <div className={`mb-4 text-3xl md:text-6xl `} aria-label={judul}>
               {icon}

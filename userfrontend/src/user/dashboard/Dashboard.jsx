@@ -4,95 +4,18 @@ import GuruPrivate from "../guru/GuruPrivate";
 import { useAuth } from "../../context/AuthContext";
 import SideNav from "../components/SideNav";
 import { UseGetOrder } from "../../hook/useGetOrder";
-import { useState } from "react";
+import ReminderKelas from "./ReminderKelas";
+import {getDataMenu} from "../../lib/data/getDataMenu";
+import { UseGetBooking } from "../../hook/kelas/useGetBooking";
 
 const Dashboard = () => {
     const { user } = useAuth();
+    
+     const { booking } = UseGetBooking(user?.iduser) ;
+      
      const { result, loading  } = UseGetOrder(user?.iduser);
 
-  
-  const [showMoreMenu, setShowMoreMenu] = useState(false);
-     
- const data = [
-  { 
-    id: 1, 
-    judul: 'Profil', 
-    link: '/profil',
-    icon: '👤',
-    color: 'bg-blue-50 border-blue-200',
-    iconColor: 'text-blue-600'
-  },
-  { 
-    id: 2, 
-    judul: 'Guru', 
-     link: '/guru',
-    icon: '👨‍🏫',
-    color: 'bg-indigo-50 border-indigo-200',
-    iconColor: 'text-indigo-600'
-  },
-  { 
-    id: 3, 
-    judul: 'Langganan', 
-    link: '/berlangganan',
-    icon: '💳',
-    color: 'bg-yellow-50 border-yellow-200',
-    iconColor: 'text-yellow-600'
-  },
-  { 
-    id: 4, 
-    judul: 'Kelas', 
-    link: '/kelas',
-    icon: '🏫',
-    color: 'bg-purple-50 border-purple-200',
-    iconColor: 'text-purple-600'
-  },
-  { 
-    id: 5, 
-    judul: 'Jadwal', 
-    link: '/jadwal',
-    icon: '📅',
-    color: 'bg-green-50 border-green-200',
-    iconColor: 'text-green-600'
-  },
-
-   { 
-    id: 6, 
-    judul: 'Tugas / Nilai', 
-    link: 'kelas',
-    icon: '📊',
-    color: 'bg-pink-50 border-pink-200',
-    iconColor: 'text-pink-600'
-  },
-  { 
-    id: 7, 
-    judul: 'Materi', 
-    kelas: '/kelas',
-    icon: '📚',
-    color: 'bg-teal-50 border-teal-200',
-    iconColor: 'text-teal-600'
-  },
-  { 
-    id: 8, 
-    judul: 'Absensi', 
-    link: '/kelas',
-    icon: '📝',
-    color: 'bg-red-50 border-red-200',
-    iconColor: 'text-red-600'
-  },
- 
-];
-
-  const moreMenus = [
-    { id: 7, judul: 'Rekening', icon: '📋' },
-    { id: 8,  judul: 'Riwayat', icon: '📋' },
-    { id: 9, judul: 'Bantuan', icon: '❓' },
-  ];
-
-  const handleMenuClick = (item) => {
-    if (item.judul === 'Lainnya') {
-      setShowMoreMenu(true);
-    }
-  };
+    const data = getDataMenu();
 
   return (
 
@@ -190,6 +113,8 @@ const Dashboard = () => {
           
           
         <div className="mb-4 p-4 pt-12 md:px-8">
+         
+          <ReminderKelas booking={booking} />
           
           <Category />
 
@@ -206,7 +131,6 @@ const Dashboard = () => {
           <div
             key={item.id}
             className="group cursor-pointer"
-            onClick={() => handleMenuClick(item)}
           >
             <div className={`${item.color} border-2 rounded-2xl p-4 hover:shadow-lg active:scale-95 transition-all duration-200`}>
               <a href={item.link} className="text-center">
@@ -231,26 +155,6 @@ const Dashboard = () => {
 
 
 
-      {/* More Menu Popup */}
-      {showMoreMenu && (
-        <div className="fixed  inset-0 bg-black/50 z-50" onClick={() => setShowMoreMenu(false)}>
-          <div 
-            className="fixed bottom-0 left-0 right-0 bg-white  justify-center item-center rounded-t-3xl p-6 transform transition-transform duration-300 ease-out"
-            style={{ animation: 'slideUp 0.3s ease-out' }}
-          >
-            <div className="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-6"></div>
-            <h3 className="text-lg font-semibold text-green-800 mb-4">Menu Lainnya</h3>
-            <div className="grid md:grid-cols-3 gap-4 mb-4">
-              {moreMenus.map((menu) => (
-                <div key={menu.id} className="text-center cursor-pointer p-3 hover:bg-gray-50 rounded-xl">
-                  <div className="text-2xl mb-2">{menu.icon}</div>
-                  <p className="text-xs text-gray-700 font-medium">{menu.judul}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
       </div>
  
  

@@ -60,6 +60,24 @@ class ServiceCommunicationController extends Controller
         ]);
     }
 
+    
+    public function getAbsensiGuru($idprofilguru)
+    {
+        $result = $this->serviceClient->getAbsensiGuru($idprofilguru);
+        
+        if (!$result['success']) {
+            return response()->json([
+                'error' => 'Gagal mengambil Absensi guru',
+                'message' => $result['error'] ?? 'Service tidak tersedia'
+            ], $result['status'] ?? 500);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $result['data']['data'] ?? []
+        ]);
+    }
+
     public function crossServiceData(Request $request)
     {
         $userId = $request->input('user_id');

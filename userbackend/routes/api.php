@@ -74,6 +74,7 @@ Route::prefix('guru')->middleware(['throttle:100,1', 'service.auth'])->group(fun
        Route::get('/bookingguru/{idprofilguru}', [BookingController::class, 'bookingGetGuru']);
        Route::put('/putbookingguru/{idBookingPrivate}', [BookingController::class, 'bookingPutGuru']);
        Route::put('/puttglbooking/{idtglbooking}', [BookingController::class, 'updateNextDays']);
+       Route::get('/daftarabsensiguru/{idprofilguru}',[ServiceCommunicationController::class, 'getAbsensiGuru']);
 });
 
 
