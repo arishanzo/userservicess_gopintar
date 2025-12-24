@@ -1,6 +1,5 @@
 
 import Category from "./Category";
-import DaftarGuru from "../guru/DaftarGuru";
 import GuruPrivate from "../guru/GuruPrivate";
 import { useAuth } from "../../context/AuthContext";
 import SideNav from "../components/SideNav";
@@ -157,7 +156,7 @@ const Dashboard = () => {
 
        {/* Main content area (Loading State) */}
 <div className="w-full h-full py-16 p-4 sm:pt-20 animate-pulse">
-  <div className="mb-4 md:py-4 pt-8 md:px-8">
+  <div className="mb-4 py-4 pt-8 md:px-8">
     {/* Judul Menu */}
     <div className="mb-6 px-2 md:hidden">
       <div className="h-5 w-32 bg-gray-300 rounded mb-2"></div>
@@ -187,10 +186,13 @@ const Dashboard = () => {
        ) : (
 
          // Main content area 
-              <div className="w-full h-full py-16 p-4 sm:pt-20 ">
+              <div className="w-full h-full py-16 p-2 sm:pt-20 ">
           
           
-        <div className="mb-4 md:py-4 pt-8 md:px-8">
+        <div className="mb-4 p-4 pt-12 md:px-8">
+          
+          <Category />
+
            <div className="mb-6 px-2 md:hidden">
         <h2 className="text-lg font-semibold text-green-800 mb-1">Menu Utama</h2>
         <p className="text-sm text-gray-500">Pilih menu untuk mengakses fitur</p>
@@ -220,9 +222,6 @@ const Dashboard = () => {
         ))}
       </div>
 
-         
-         <DaftarGuru result={result}/>
-          <Category />
             <GuruPrivate result={result} />
         </div>
 

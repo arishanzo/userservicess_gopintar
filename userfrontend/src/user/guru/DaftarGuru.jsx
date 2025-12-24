@@ -26,6 +26,26 @@ const DesaName = ({ desaId, kecamatanId }) => {
 };
 
 
+const KabupatenName = ({ kecamatanId, kabupatenId }) => {
+  const [kecamatanName, setKecamatanName] = useState("Lokasi");
+
+ 
+  useEffect(() => {
+    if (kabupatenId) {
+      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`)
+        .then(res => res.json())
+        .then(data => setKecamatanName(data.find(item => item.id === kecamatanId).name || "Lokasi"))
+        .catch(() => setKecamatanName(""));
+    }
+  }, [kabupatenId, kecamatanId]);
+  
+  return  <span>
+          {kecamatanName.charAt(0).toUpperCase() + kecamatanName.slice(1).toLowerCase()}
+        </span>
+
+  
+};
+
 const DaftarGuru = ( { result }) => {
 
 
@@ -78,6 +98,8 @@ const DaftarGuru = ( { result }) => {
              Navigate('/kelas/buatkelas');
              }
            }
+
+           console.log(profil)
      
   const guruTerdekat = guru?.filter(g => g.kecamatan === profil?.kecamatan);
 
@@ -86,13 +108,13 @@ const DaftarGuru = ( { result }) => {
         <>
 
 
-<div className="pt-2 md:py-2 sm:py-8    overflow-x-hidden" id='mentor'>
+<div className="pt-2 md:py-2 sm:py-8 " id='mentor'>
   
  <div className="mx-auto py-8 px-2 md:px-8">
-  <div className="mb-2 text-center">
+  <div className="mb-2 text-start">
     <div className="flex items-center justify-between gap-12">
-      <h2 className="text-xl font-bold text-green-800 lg:text-xl">
-        👨‍🏫 Guru Terdekat
+      <h2 className="md:text-xl  text-lg font-bold text-green-800 lg:text-xl">
+        👨‍🏫 Guru di Kecamatan <KabupatenName kabupatenId={profil?.kabupaten} kecamatanId={profil?.kecamatan} />
       </h2>
       <a
         href="/guru"

@@ -9,7 +9,7 @@ const categories = getDataCategoryBelajar();
 
 
   return (
-    <div className="mb-4 md:pt-4">
+    <div className="mb-4 md:pt-4 py-4">
       <div className="flex mx-auto  px-2 md:px-8 items-center justify-between mb-6">
         <h2 className="text-xl font-bold text-green-800">📚 Kategori Pelajaran</h2>
       </div>
@@ -43,12 +43,12 @@ const categories = getDataCategoryBelajar();
 
        <div className="flex md:hidden px-2 md:px-8 justify-end">
         {categories.map(({ id, judul, icon }) => (
-           <div key={id} className="relative group flex-shrink-0 w-40 h-full py-2 p-2 md:p-0">
-            <div className="relative overflow-hidden group bg-white rounded-xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl duration-300">
+           <div key={id} className="relative group flex-shrink-0 w-40 py-2 p-2 md:p-0">
+            <div className="relative overflow-hidden group bg-white rounded-xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl duration-300 h-full">
           
           <div
          
-            className={`flex flex-col items-center p-6 rounded-3xl shadow-lg bg-green-50 boder-gray-900 hover:scale-105 transform transition-transform duration-300 cursor-pointer`}
+            className={`flex flex-col items-center p-6 rounded-3xl shadow-lg bg-green-50 boder-gray-900 hover:scale-105 transform transition-transform duration-300 cursor-pointer h-full`}
           >
             <div className={`mb-4 text-3xl md:text-6xl `} aria-label={judul}>
               {icon}

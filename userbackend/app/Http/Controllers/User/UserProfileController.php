@@ -94,7 +94,7 @@ class UserProfileController extends Controller
        }
 
 
-        Cache::forget("profil_" . $cekprofil->iduser);
+        Cache::forget("profil_" . $user->iduser);
 
         return response()->json([
             'message' => 'Profile Berhasil Disimpan',

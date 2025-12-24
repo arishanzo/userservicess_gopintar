@@ -5,23 +5,46 @@ import CryptoJS from 'crypto-js';
 import {  useEffect, useRef, useState } from 'react';
 import { UseGetGuru } from "../../hook/useGetGuru";
 import { UseGetBooking } from "../../hook/kelas/useGetBooking";
+import { UseGetProfil } from "../../hook/useGetProfil";
 
 
-// Komponen untuk menampilkan nama kabupaten
-const KabupatenName = ({ kabupatenId }) => {
-  const [kabupatenName, setKabupatenName] = useState("Lokasi");
+
+
+const DesaName = ({ desaId, kecamatanId }) => {
+  const [desaName, setDesaName] = useState("Lokasi");
+
+ 
+  useEffect(() => {
+    if (desaId) {
+      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`)
+        .then(res => res.json())
+        .then(data => setDesaName(data.find(item => item.id === desaId).name || "Lokasi"))
+        .catch(() => setDesaName("Lokasi"));
+    }
+  }, [desaId, kecamatanId]);
+  
+  return <span>{desaName}</span>;
+  
+};
+
+
+const KabupatenName = ({ kecamatanId, kabupatenId }) => {
+  const [kecamatanName, setKecamatanName] = useState("Lokasi");
 
  
   useEffect(() => {
     if (kabupatenId) {
-      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regency/${kabupatenId}.json`)
+      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`)
         .then(res => res.json())
-        .then(data => setKabupatenName(data.name || "Lokasi"))
-        .catch(() => setKabupatenName("Lokasi"));
+        .then(data => setKecamatanName(data.find(item => item.id === kecamatanId).name || "Lokasi"))
+        .catch(() => setKecamatanName(""));
     }
-  }, [kabupatenId]);
+  }, [kabupatenId, kecamatanId]);
   
-  return <span>{kabupatenName}</span>;
+  return  <span>
+          {kecamatanName.charAt(0).toUpperCase() + kecamatanName.slice(1).toLowerCase()}
+        </span>
+
   
 };
 
@@ -30,7 +53,6 @@ const GuruPrivate = ( { result, }) => {
    const [kategori, setKategori] = useState("Filter");
 
 
-  const scrollRef = useRef(null);
   
 
   const [showModal, setShowModal] = useState(false);
@@ -38,6 +60,7 @@ const GuruPrivate = ( { result, }) => {
   const [showModalBooking, setShowModalBooking] = useState(false);
 
   
+    const { profil } = UseGetProfil(result?.iduser || '');
     const { guru } = UseGetGuru();
     const { booking } = UseGetBooking(result?.iduser || '');
 
@@ -51,17 +74,16 @@ const GuruPrivate = ( { result, }) => {
         mentor.user_guru?.name?.toLowerCase().includes(query.toLowerCase()) ||
         (mentor.mapel && Array.isArray(mentor.mapel) && mentor.mapel.some(mp => mp?.toLowerCase().includes(query.toLowerCase())))
       )
-    : guru?.filter(mentor => 
-        kategori === "Filter" 
-          ? true
-          : mentor.bidangngajar === kategori
+    : guru?.filter(mentor =>mentor.kecamatan === profil?.kecamatan  && (kategori === "Filter" ? true : mentor.bidangngajar === kategori)
       );
+ 
+      console.log(hasilFilter)
 
    const Navigate = useNavigate();
  
  
    const kembali = () => {
-    Navigate(-1);
+    Navigate('/guru');
     setKategori("Filter");
    };
 
@@ -113,7 +135,7 @@ const GuruPrivate = ( { result, }) => {
       <div className="mb-2 text-center">
         <div className="flex items-center justify-between gap-12">
           <h2 className="text-xl font-bold text-green-800 lg:text-xl">
-            👨‍🏫 Daftar Guru
+             👨‍🏫 Guru di Kecamatan <KabupatenName kabupatenId={profil?.kabupaten} kecamatanId={profil?.kecamatan} />
           </h2>
 
           {/* Dropdown */}
@@ -140,8 +162,9 @@ const GuruPrivate = ( { result, }) => {
 
   {/* Loading state */}
         {!guru ? (
-          <div className="flex gap-12 pt-2 overflow-x-auto">
-            {[...Array(6)].map((_, i) => (
+          
+     <div className="hidden md:grid px-2 md:px-8 grid-cols-2  sm:grid-cols-3 lg:grid-cols-6 gap-10">
+            {[...Array(20)].map((_, i) => (
               <div key={i} className="flex-shrink-0 w-40 py-4">
                 <div className="bg-white rounded-xl shadow-lg">
                   <div className="animate-pulse bg-gray-300 rounded-xl h-40 w-40"></div>
@@ -161,15 +184,11 @@ const GuruPrivate = ( { result, }) => {
         ) : (
 
     <div className="">
-      <div 
-        ref={scrollRef}
-        className="flex gap-8 pt-2 overflow-x-auto scrollbar-hide cursor-grab scroll-smooth focus:outline-none"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        tabIndex={0}
-      >
-        {hasilFilter.length === 0 ? (
-          <div className="w-full flex flex-col items-center justify-center py-16 px-4">
-            <div className=" rounded-2xl p-8 max-w-md w-full text-center">
+    <div className="md:grid px-2 md:px-8 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-10">
+  {hasilFilter.length === 0 ? (
+    <div className="col-span-full flex justify-center items-center py-16 px-4">
+      <div className="rounded-2xl p-8 max-w-md w-full text-center">
+        {/* isi konten */}
               <div className="mb-6">
                 <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                   <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -177,11 +196,11 @@ const GuruPrivate = ( { result, }) => {
                   </svg>
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Guru Tidak Ditemukan</h3>
-                <p className="text-gray-500 text-sm mb-6">Tidak ada guru yang sesuai dengan pencarian "{query}"</p>
+                <p className="text-gray-500 text-sm mb-6">Tidak ada guru yang sesuai dengan pencarian / Lokasi Anda Saat Ini, Perbarui Lokasi Anda Di Menu Profil</p>
               </div>
               <div className="flex gap-3">
                 <button
-                  onClick={() => window.location.reload()}
+                  onClick={() => kembali()}
                   className="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -222,7 +241,7 @@ const GuruPrivate = ( { result, }) => {
                  <h3 className="text-xs font-semibold mb-2">{mentor.user_guru?.name || "Mentor Name"}</h3>
                 <p className="text-green-600 font-bold text-sm mb-2">{mentor?.mapel || "Subject Expert"}</p>
                 <span  className="text-gray-500  font-semibold text-xs">Lokasi:</span>
-                <p className="text-gray-500  text-xs "><KabupatenName kabupatenId={mentor?.kabupaten} /></p>
+                <p className="text-gray-500  text-xs "><DesaName kecamatanId={mentor?.kecamatan} desaId={mentor?.kelurahan} /></p>
               </div>
              <div className="absolute bottom-0 left-0 right-0 bg-white p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out shadow-lg rounded-t-lg">
                 <p className="text-sm text-gray-700 mb-3">
