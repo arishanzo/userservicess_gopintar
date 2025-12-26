@@ -9,7 +9,9 @@ const Langganan = () => {
 
     const { user } = useAuth(); 
 
-    const { result } = UseGetOrder(user?.iduser);
+    const { result, loading } = UseGetOrder(user?.iduser);
+
+    console.log(result)
   
     return (
 
@@ -21,7 +23,7 @@ const Langganan = () => {
     <div className="flex-1   top-0 min-h-screen w-[80%]">
            <div className="w-full h-full flex items-center justify-start md:px-12 px-2 md:pt-8">
             <div className="w-full max-w-full">
-    {!result ? (
+    {loading ? (
 
      <div className="p-8 border border-gray-200 rounded-2xl shadow-sm flex flex-col animate-pulse">
             <div className="h-6 bg-gray-200 rounded w-1/3 mb-4"></div>

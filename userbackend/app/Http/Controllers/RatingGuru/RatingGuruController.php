@@ -9,15 +9,15 @@ use Illuminate\Http\Request;
 
 class RatingGuruController extends Controller
 {
-    public function RatingGet($idbookingprivate){
+    public function RatingGet(){
 
 
-           $booking = RatingGuru::with('Booking')->where('idbookingprivate', $idbookingprivate)->get();
+           $rating = RatingGuru::with('Booking')->get();
          
              return response()->json([
             'status' => 200,
-            'data' => $booking,
-            'message' => $booking ? 'Rating Ada' : 'Rating Tidak Ada'
+            'data' => $rating,
+            'message' => $rating ? 'Rating Ada' : 'Rating Tidak Ada'
         ]);
     }
 

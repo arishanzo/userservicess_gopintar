@@ -121,6 +121,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/midtrans/{iduser}', [PaymentController::class, 'destroy']);
 
     Route::post('/ratingguru', [RatingGuruController::class, 'store']);
+    Route::get('/ratingguru', [RatingGuruController::class, 'ratingGet']);
 
     
     // Debug route for testing

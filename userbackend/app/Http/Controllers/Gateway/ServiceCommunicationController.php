@@ -138,25 +138,45 @@ class ServiceCommunicationController extends Controller
 
         
     public function putSaldoMasuk(Request $request, $idguru)
-            {
-                $payload = [
-                    'idbookingprivate' => $request->idbookingprivate ?? '',
-                    'jumlahsaldomasuk' => $request->jumlahsaldomasuk ?? '',
-                    'tglsaldomasuk' => $request->tglsaldomasuk ?? '',
-                ];
+    {
+        try {
+            // Validate required fields
+            $request->validate([
+                'idbookingprivate' => 'required|string',
+                'jumlahsaldomasuk' => 'required|numeric|min:0',
+                'tglsaldomasuk' => 'required|date'
+            ]);
 
-            
-                $result = $this->serviceClient->putSaldoMasuk($idguru, $payload);
+            $payload = [
+                'idbookingprivate' => $request->idbookingprivate,
+                'jumlahsaldomasuk' => $request->jumlahsaldomasuk,
+                'tglsaldomasuk' => $request->tglsaldomasuk,
+            ];
 
-                if (!$result['success']) {
-                    return response()->json([
-                        'error' => 'Failed to update',
-                        'message' => $result['error'] ?? 'Service unavailable'
-                    ], $result['status']);
-                }
+            $result = $this->serviceClient->putSaldoMasuk($idguru, $payload);
 
-                return response()->json($result['data'], $result['status']);
+            if (!$result['success']) {
+                return response()->json([
+                    'error' => 'Failed to update',
+                    'message' => $result['error'] ?? 'Service unavailable'
+                ], $result['status'] ?? 500);
             }
+
+            return response()->json($result['data'], $result['status'] ?? 200);
+            
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'error' => 'Validation failed',
+                'message' => $e->getMessage(),
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Internal server error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 
 
         public function getAllTugasKelas($idbookingprivate)

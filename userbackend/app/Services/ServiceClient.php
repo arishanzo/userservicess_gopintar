@@ -59,11 +59,35 @@ public function call($service, $endpoint, $method = 'GET', $data = [], $headers 
                 throw new \InvalidArgumentException("Unsupported HTTP method: {$method}");
         }
 
+        // Better error handling
+        if ($response->failed()) {
+            return [
+                'success' => false,
+                'status'  => $response->status(),
+                'error'   => $response->json('message') ?? 'Request failed',
+                'data'    => $response->json(),
+            ];
+        }
+
         return [
-            'success' => $response->successful(),
+            'success' => true,
             'status'  => $response->status(),
             'data'    => $response->json(),
             'body'    => $response->body(),
+        ];
+    } catch (\Illuminate\Http\Client\ConnectionException $e) {
+        return [
+            'success' => false,
+            'status'  => 503,
+            'error'   => 'Service unavailable: ' . $e->getMessage(),
+            'data'    => null,
+        ];
+    } catch (\Illuminate\Http\Client\RequestException $e) {
+        return [
+            'success' => false,
+            'status'  => $e->response ? $e->response->status() : 500,
+            'error'   => 'Request failed: ' . $e->getMessage(),
+            'data'    => $e->response ? $e->response->json() : null,
         ];
     } catch (\Exception $e) {
         return [

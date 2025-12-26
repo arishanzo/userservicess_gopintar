@@ -6,6 +6,7 @@ import {  useEffect,  useState } from 'react';
 import { UseGetGuru } from "../../hook/useGetGuru";
 import { UseGetBooking } from "../../hook/kelas/useGetBooking";
 import { UseGetProfil } from "../../hook/useGetProfil";
+import { UseGetRatingGuru } from "../../hook/useGetRatingGuru";
 
 
 
@@ -53,16 +54,17 @@ const KabupatenName = ({ kecamatanId, kabupatenId }) => {
 const GuruPrivate = ( { result, user }) => {
    const [kategori, setKategori] = useState("Filter");
 
-  
-
   const [showModal, setShowModal] = useState(false);
   
   const [showModalBooking, setShowModalBooking] = useState(false);
+
 
   
     const { profil } = UseGetProfil(user?.iduser || '');
     const { guru } = UseGetGuru();
     const { booking } = UseGetBooking(user?.iduser || '');
+    const { ratingGuru } =  UseGetRatingGuru();
+
 
   const queryParams = new URLSearchParams(window.location.search);
  const query = queryParams.get('cariguru') || '';
@@ -108,7 +110,7 @@ const GuruPrivate = ( { result, user }) => {
           sessionStorage.removeItem('selectedGuruId');
 
            const secretKey = 'gopintarguru2025';
-           const encrypted = CryptoJS.AES.encrypt(idprofilguru, secretKey).toString();
+           const encrypted = CryptoJS.AES.encrypt(idprofilguru, secretKey);
      
            const selectedGuruId = sessionStorage.getItem('selectedGuruId', encrypted);
      
@@ -273,7 +275,17 @@ const GuruPrivate = ( { result, user }) => {
                  <h3 className="text-xs font-semibold mb-2">{mentor.user_guru?.name || "Mentor Name"}</h3>
                 <p className="text-green-600 font-bold text-sm mb-2">{mentor?.mapel || "Subject Expert"}</p>
                 <span  className="text-gray-500  font-semibold text-xs">Lokasi:</span>
-                <p className="text-gray-500  text-xs "><DesaName kecamatanId={mentor?.kecamatan} desaId={mentor?.kelurahan} /></p>
+                <p className="text-gray-500  text-xs mb-2"><DesaName kecamatanId={mentor?.kecamatan} desaId={mentor?.kelurahan} /></p>
+                <div className="flex items-center gap-1">
+                  <span className="text-yellow-500 text-xs">★</span>
+                  <span className="text-gray-700 font-semibold text-xs"> {(
+                        (ratingGuru?.filter((i) => i.idprofilguru === mentor.idprofilguru)
+                          .reduce((sum, r) => sum + r.rating, 0) || 0) /
+                        (ratingGuru?.filter((i) => i.idprofilguru === mentor.idprofilguru).length || 1)
+                      ).toFixed(1)}
+                    </span>
+                  <span className="text-gray-500 text-xs">({ratingGuru?.filter((i) => i.idprofilguru === mentor.idprofilguru).length || 0} ulasan)</span>
+                </div>
               </div>
              <div className="absolute bottom-0 left-0 right-0 bg-white p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out shadow-lg rounded-t-lg">
                 <p className="text-sm text-gray-700 mb-3">

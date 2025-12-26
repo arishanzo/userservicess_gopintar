@@ -25,7 +25,7 @@ class RatingGuru extends Model
 
         public function Booking()
      {
-         return $this->hasMany(Booking::class, 'idbookingprivate'); // Relasi Many-to-One
+         return $this->belongsTo(Booking::class, 'idbookingprivate', 'idbookingprivate');
      }
  
 
@@ -33,7 +33,7 @@ class RatingGuru extends Model
     protected $fillable = [
         'iduser',
         'idprofilguru',
-        'bookingprivate',
+        'idbookingprivate',
         'rating',
         'comment',
     ];

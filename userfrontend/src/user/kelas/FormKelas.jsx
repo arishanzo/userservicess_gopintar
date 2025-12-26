@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfilGuru from "./form/ProfilGuru";
 import ReviewForm from "./form/ReviewForm";
@@ -19,16 +19,18 @@ const FormKelas = () => {
   const [textButton, setTextButton] = useState("Submit");
     
     const secretKey = 'gopintarguru2025';
-    const encryptedId = sessionStorage.getItem('selectedGuruId');
     const [showModal, setShowModal] = useState(false);
+    const [selectedGuruId, setSelectedGuruId] = useState(null);
 
-    let selectedGuruId = null;
+    useEffect(() => {
+      const encryptedId = sessionStorage.getItem('selectedGuruId');
+      if (encryptedId) {
+        const bytes = CryptoJS.AES.decrypt(encryptedId, secretKey);
+        setSelectedGuruId(bytes.toString(CryptoJS.enc.Utf8));
+      }
+    }, []);
 
-    if (encryptedId) {
-      const bytes = CryptoJS.AES.decrypt(encryptedId, secretKey);
-      selectedGuruId = bytes.toString(CryptoJS.enc.Utf8);
-    }
-
+ console.log('selectedGuruId:', selectedGuruId)
 
      const { guru, loading, error } = UseGetGuru();
 

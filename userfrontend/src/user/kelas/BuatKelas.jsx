@@ -22,8 +22,6 @@ const BuatKelas = () => {
           selectedGuruId = bytes.toString(CryptoJS.enc.Utf8);
         }
     
-    console.log(selectedGuruId)
-
     useEffect(() => {
         const timer = setTimeout(() => {
             setPageLoading(false);
