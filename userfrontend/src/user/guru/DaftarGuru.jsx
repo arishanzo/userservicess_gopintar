@@ -85,7 +85,7 @@ const DaftarGuru = ( { result }) => {
          
            const selectedGuruId = sessionStorage.getItem('selectedGuruId', encrypted);
      
-             if(result.statuspembayaran === 'pending' || result.statuspembayaran === 'expire' || !result ){
+             if(result?.statuspembayaran === 'pending' || result?.statuspembayaran === 'expire' || !result ){
                
                setShowModal(true);
              }else if (booking.length > 0) {

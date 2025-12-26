@@ -83,13 +83,30 @@ export const serviceClient = {
     });
   },
 
-    putSaldoGuru:  (idguru, formSaldoMasuk) => {
-    return axiosClient.put(`/api/guru/saldomasuk/${idguru}`, formSaldoMasuk,{
-      headers: {
-        'X-Service-Key': import.meta.env.VITE_SERVICE_KEY,
+    putSaldoGuru: async (idguru, formSaldoMasuk) => {
+    try {
+      console.log('Calling putSaldoGuru with:', { idguru, formSaldoMasuk });
+      
+      const response = await axiosClient.put(`/api/guru/saldomasuk/${idguru}`, formSaldoMasuk, {
+        headers: {
+          'X-Service-Key': import.meta.env.VITE_SERVICE_KEY,
           "Accept": "application/json",
-      }
-    });
+          "Content-Type": "application/json"
+        },
+        timeout: 10000
+      });
+      
+      return response;
+    } catch (error) {
+      console.error('putSaldoGuru error:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        url: `/api/guru/saldomasuk/${idguru}`,
+        method: 'PUT'
+      });
+      throw error;
+    }
   },
 
    putTugasKelas: (idtugasbelajar, statusTugas) => {

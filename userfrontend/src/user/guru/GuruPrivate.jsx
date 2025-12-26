@@ -13,6 +13,7 @@ import { UseGetProfil } from "../../hook/useGetProfil";
 const DesaName = ({ desaId, kecamatanId }) => {
   const [desaName, setDesaName] = useState("");
 
+
  
   useEffect(() => {
     if (desaId) {
@@ -49,9 +50,8 @@ const KabupatenName = ({ kecamatanId, kabupatenId }) => {
 };
 
 
-const GuruPrivate = ( { result}) => {
+const GuruPrivate = ( { result, user }) => {
    const [kategori, setKategori] = useState("Filter");
-
 
   
 
@@ -60,10 +60,9 @@ const GuruPrivate = ( { result}) => {
   const [showModalBooking, setShowModalBooking] = useState(false);
 
   
-    const { profil } = UseGetProfil(result?.iduser || '');
+    const { profil } = UseGetProfil(user?.iduser || '');
     const { guru } = UseGetGuru();
-    const { booking } = UseGetBooking(result?.iduser || '');
-
+    const { booking } = UseGetBooking(user?.iduser || '');
 
   const queryParams = new URLSearchParams(window.location.search);
  const query = queryParams.get('cariguru') || '';
@@ -77,7 +76,7 @@ const GuruPrivate = ( { result}) => {
     : guru?.filter(mentor =>mentor.kecamatan === profil?.kecamatan  && (kategori === "Filter" ? true : mentor.bidangngajar === kategori)
       );
  
-
+      
    const Navigate = useNavigate();
  
  
@@ -101,18 +100,22 @@ const GuruPrivate = ( { result}) => {
         setShowModal(false);
         Navigate('/kelas');
     };
+
   
     
       const handleSubmit = async (idprofilguru) => {
+        
+          sessionStorage.removeItem('selectedGuruId');
+
            const secretKey = 'gopintarguru2025';
            const encrypted = CryptoJS.AES.encrypt(idprofilguru, secretKey).toString();
      
            const selectedGuruId = sessionStorage.getItem('selectedGuruId', encrypted);
      
-             if(result.statuspembayaran === 'pending' || result.statuspembayaran === 'expire' || !result ){
+             if(result === null || result?.statuspembayaran === 'pending' || result?.statuspembayaran === 'expire' ){
                
                setShowModal(true);
-             }else if (booking.length > 0) {
+             }else if (booking.statusbooking === 'Sudah Mulai') {
                 setShowModalBooking(true);
              }else if (selectedGuruId) {
                 setShowModal(true);
@@ -123,7 +126,6 @@ const GuruPrivate = ( { result}) => {
              }
            }
      
-
     return (
 
         <>
@@ -313,7 +315,7 @@ const GuruPrivate = ( { result}) => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                                 </svg>
                             </div>
-                            { result.statuspembayaran === 'pending' || result.statuspembayaran === 'expire' || !result  ? (
+                            { result?.statuspembayaran === 'pending' || result?.statuspembayaran === 'expire' || result === null  ? (
                               <>
                               <h3 className="text-lg font-medium text-gray-900 mb-2">Maaf Anda Belum Berlangganan</h3>
                                 <p className="text-sm text-gray-500 mb-4">Anda Belum Berlangganan Mohon Langganan Terlebih Dahulu</p>

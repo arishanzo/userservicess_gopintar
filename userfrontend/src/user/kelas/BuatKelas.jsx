@@ -15,7 +15,6 @@ const BuatKelas = () => {
      const secretKey = 'gopintarguru2025';
         const encryptedId = sessionStorage.getItem('selectedGuruId');
     
-        console.log(encryptedId)
         let selectedGuruId = null;
     
         if (encryptedId) {
@@ -23,8 +22,8 @@ const BuatKelas = () => {
           selectedGuruId = bytes.toString(CryptoJS.enc.Utf8);
         }
     
-        console.log(selectedGuruId);
-    
+    console.log(selectedGuruId)
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setPageLoading(false);

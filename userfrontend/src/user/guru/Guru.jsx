@@ -77,7 +77,7 @@ const Guru = () => {
   <>
 
             <Category/>
-            <GuruPrivate  result={result} guru={guru} />
+            <GuruPrivate  result={result} guru={guru}  user={user}/>
             </>
 )}
 

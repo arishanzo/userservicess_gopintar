@@ -17,7 +17,6 @@ const Dashboard = () => {
      const { result, loading  } = UseGetOrder(user?.iduser);
 
     const data = getDataMenu();
-
     
     const { guru } = UseGetGuru();
 
@@ -150,7 +149,7 @@ const Dashboard = () => {
         ))}
       </div>
 
-            <GuruPrivate result={result}/>
+            <GuruPrivate result={result} user={user}/>
         </div>
 
         

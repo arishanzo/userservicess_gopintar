@@ -36,8 +36,10 @@ const FormKelas = () => {
      const [currentStep, setCurrentStep] = useState(0);
 
   const datamentor = Array.isArray(guru) 
-    ? guru.find(mentor => mentor.idprofilguru === selectedGuruId)
+    ? guru?.find(mentor => mentor.idprofilguru === selectedGuruId)
     : null;
+
+    console.log(datamentor)
     
     const [formData, setFormData] = useState({
         namamurid: "",

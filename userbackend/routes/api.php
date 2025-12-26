@@ -12,6 +12,7 @@ use App\Http\Controllers\Pembayaran\PaymentController;
 use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\Gateway\ServiceCommunicationController;
 use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\RatingGuru\RatingGuruController;
 use App\Models\ProfilUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -75,8 +76,9 @@ Route::prefix('guru')->middleware(['throttle:100,1', 'service.auth'])->group(fun
        Route::put('/putbookingguru/{idBookingPrivate}', [BookingController::class, 'bookingPutGuru']);
        Route::put('/puttglbooking/{idtglbooking}', [BookingController::class, 'updateNextDays']);
        Route::get('/daftarabsensiguru/{idprofilguru}',[ServiceCommunicationController::class, 'getAbsensiGuru']);
-       Route::put('/saldomasuk/{idguru}',[ServiceCommunicationController::class, 'putsaldoMasuk'])->where('idguru', '[0-9a-fA-F\-]+');
-});
+       Route::put('/saldomasuk/{idguru}',[ServiceCommunicationController::class, 'putSaldoMasuk'])->where('idguru', '[0-9a-fA-F\-]+');
+
+    });
 
 
 Route::prefix('admin')->middleware(['throttle:100,1', 'service.auth'])->group(function () {
@@ -117,6 +119,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/midtrans/updateStatus/{order_id}', [PaymentController::class, 'updateTransaction']);
 
     Route::delete('/midtrans/{iduser}', [PaymentController::class, 'destroy']);
+
+    Route::post('/ratingguru', [RatingGuruController::class, 'store']);
+
     
     // Debug route for testing
     Route::get('/midtrans/debug/{order_id}', function($order_id) {

@@ -137,7 +137,7 @@ class ServiceCommunicationController extends Controller
 
 
         
-    public function putsaldoMasuk(Request $request, $idguru)
+    public function putSaldoMasuk(Request $request, $idguru)
             {
                 $payload = [
                     'idbookingprivate' => $request->idbookingprivate ?? '',

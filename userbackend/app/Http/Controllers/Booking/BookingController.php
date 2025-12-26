@@ -212,8 +212,7 @@ class BookingController extends Controller
             
             if (Booking::find($data['idbookingprivate'])) {
 
-            Log::info('TglBooking data to save', $data);
-
+         
             $tglBooking = TglBooking::create($data);
 
           

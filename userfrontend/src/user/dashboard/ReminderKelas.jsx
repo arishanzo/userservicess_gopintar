@@ -47,24 +47,28 @@ const tglAbsen = absensiGuru?.filter((item) => {
 
 
   const konfirmasiSelesai = async (idbookingprivate) => {
+     console.log('Button diklik!', idbookingprivate);
+     console.log('Disabled state:', disabled);
      
-      setDisabled(true);
+     setDisabled(true);
+     const toastLoading = toast.loading("Prosess...");
 
-     const formSaldoMasuk = new FormData();
-     formSaldoMasuk.append('idbookingprivate', idbookingprivate);
-     formSaldoMasuk.append('jumlahsaldomasuk', 310000)
-     formSaldoMasuk.append('tglsaldomasuk', now);
-
-        const toastLoading = toast.loading("Prosess...");
+     const saldoData = {
+       idbookingprivate: idbookingprivate,
+       jumlahsaldomasuk: 310000,
+       tglsaldomasuk: now.toISOString().split('T')[0]
+     };
+     
    try {
-       
-      await axiosClient.put(`/api/booking/${idbookingprivate}`, {
+     await axiosClient.put(`/api/booking/${idbookingprivate}`, {
         status: 'Selesai'
       });
       
-      await axiosClient.delete(`/api/midtrans//${booking[0]?.iduser}`)
+    //  await axiosClient.delete(`/api/midtrans/${booking[0]?.iduser}`)
 
-     await serviceClient.putSaldoGuru(cariIDGuru, { formSaldoMasuk });
+     if (cariIDGuru) {
+       await serviceClient.putSaldoGuru(cariIDGuru, saldoData);
+     }
             
           toast.success("🎉 Komfirmasi Berhasil", {
                 style: {
@@ -105,13 +109,12 @@ const tglAbsen = absensiGuru?.filter((item) => {
 
     const beriRatingGuru = async () => {
    
-    setDisabled(true);
     const toastLoading = toast.loading("Prosess...");
 
    try {
         setDisabled(true);
        
-      await axiosClient.put(`/api/ratingguru`, {
+      await axiosClient.post(`/api/ratingguru`, {
         idprofilguru: booking[0]?.idprofilguru,
         idbookingprivate: booking[0]?.idbookingprivate,
         rating: rating,
@@ -157,6 +160,7 @@ const tglAbsen = absensiGuru?.filter((item) => {
       }
     };
 
+
   return (
     <>
     {tglAbsen.length > 0 && booking[0].statusbooking === 'Sudah Mulai' && (
@@ -179,8 +183,7 @@ const tglAbsen = absensiGuru?.filter((item) => {
               <div className="flex items-center justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-3">
-                    <div className={`w-3 h-3 rounded-full  bg-green-500
-                    `} />
+                    <div className={`w-3 h-3 rounded-full  bg-green-500`} />
                     <h2 className="text-xl font-bold text-green-800">
                       {item.mapeldipilih}
                     </h2>
@@ -201,19 +204,18 @@ const tglAbsen = absensiGuru?.filter((item) => {
               
                     <button
                       onClick={() => konfirmasiSelesai(item.idbookingprivate)}
-                       className={`${
-                      disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
-                     } bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-2xl font-semibold hover:from-green-700 hover:to-green-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl`}
+                      disabled={disabled}
+                      className={`${ disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                       } bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-2xl font-semibold hover:from-green-700 hover:to-green-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl`}
                     >
                       Konfirmasi Selesai
                     </button>
                 </div>
               </div>
-              
-              <div className={`absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-5 transition-opacity duration-300 ${
-                item.selesai ? 'from-green-400 to-emerald-400' : 'from-green-400 to-green-400'
-              }`} />
+            
             </div>
+
+            
           ))}
         </div>
       </div>

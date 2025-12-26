@@ -153,7 +153,12 @@ class PaymentController extends Controller
         public function getTransaction($iduser)
         {
             $trx = Pembayaran::where('iduser', $iduser)->first();
-            return response()->json($trx);
+            
+             return response()->json([
+            'status' => 200,
+            'data' => $trx,
+            'message' => $trx ? 'Ada' : 'Tidak Ada'
+        ]);
         }
 
     public function checkStatus($order_id)
@@ -262,9 +267,16 @@ public function updateTransaction(Request $request, $order_id)
   public function destroy($iduser)
     {
         try {
-        $tugas = Pembayaran::findOrFail($iduser);
-        $tugas->delete();
-
+        $data = Pembayaran::where('iduser', $iduser)->first();
+        
+        if (!$data) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
+        
+        $data->delete();
 
         return response()->json([
             'success' => true,
@@ -273,7 +285,7 @@ public function updateTransaction(Request $request, $order_id)
     } catch (\Exception $e) {
         return response()->json([
             'success' => false,
-            'message' => 'Gagal menghapus tugas',
+            'message' => 'Gagal menghapus',
             'error' => $e->getMessage()
         ], 500);
     }
