@@ -4,7 +4,6 @@ import { getFetchCache } from "../fetchCahce/getFetchCache";
 export const getTugasKelasServices = async (idbookingprivate) => {
     try {
         const response = await getFetchCache(() => serviceClient.getTugasKelas(idbookingprivate));
-        console.log('API Response:', response.data); // Debug log
         
        return response.data;
 

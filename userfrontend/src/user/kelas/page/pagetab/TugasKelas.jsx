@@ -6,11 +6,10 @@ import { serviceClient } from "../../../../lib/axios";
 
 const TugasKelas = ( { booking }) => {
         
-      const  {tugasKelas, loadingTugasKelas } = UseGetTugasKelas(booking?.idbookingprivate);
+      const  {tugasKelas, loadingTugasKelas } = UseGetTugasKelas(booking[0]?.idbookingprivate);
       const [disabled, setDisabled] = React.useState(false);
      
 
-        console.log('tugasKelas', tugasKelas);
 
   const options = { day: "numeric", month: "long", year: "numeric" };
    

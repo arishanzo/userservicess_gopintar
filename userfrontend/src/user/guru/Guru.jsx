@@ -5,10 +5,13 @@ import SideNav from "../components/SideNav";
 import { UseGetOrder } from "../../hook/useGetOrder";
 import { useAuth } from "../../context/AuthContext";
 import Category from "../dashboard/Category";
+import { UseGetGuru } from "../../hook/useGetGuru";
 
 const Guru = () => {
  const { user } = useAuth();
  const { result, loading } = UseGetOrder(user?.iduser);
+
+ const { guru } = UseGetGuru();
  
 
   return (
@@ -74,7 +77,7 @@ const Guru = () => {
   <>
 
             <Category/>
-            <GuruPrivate  result={result} />
+            <GuruPrivate  result={result} guru={guru} />
             </>
 )}
 

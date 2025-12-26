@@ -136,6 +136,27 @@ class ServiceCommunicationController extends Controller
         }
 
 
+        
+    public function putsaldoMasuk(Request $request, $idguru)
+            {
+                $payload = [
+                    'idbookingprivate' => $request->idbookingprivate ?? '',
+                    'jumlahsaldomasuk' => $request->jumlahsaldomasuk ?? '',
+                    'tglsaldomasuk' => $request->tglsaldomasuk ?? '',
+                ];
+
+            
+                $result = $this->serviceClient->putSaldoMasuk($idguru, $payload);
+
+                if (!$result['success']) {
+                    return response()->json([
+                        'error' => 'Failed to update',
+                        'message' => $result['error'] ?? 'Service unavailable'
+                    ], $result['status']);
+                }
+
+                return response()->json($result['data'], $result['status']);
+            }
 
 
         public function getAllTugasKelas($idbookingprivate)

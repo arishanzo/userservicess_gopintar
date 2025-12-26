@@ -83,6 +83,15 @@ export const serviceClient = {
     });
   },
 
+    putSaldoGuru:  (idguru, formSaldoMasuk) => {
+    return axiosClient.put(`/api/guru/saldomasuk/${idguru}`, formSaldoMasuk,{
+      headers: {
+        'X-Service-Key': import.meta.env.VITE_SERVICE_KEY,
+          "Accept": "application/json",
+      }
+    });
+  },
+
    putTugasKelas: (idtugasbelajar, statusTugas) => {
     return axiosClient.put(`/api/tugaskelas/tugaskelas/${idtugasbelajar}`, statusTugas,{
       headers: {
@@ -91,6 +100,8 @@ export const serviceClient = {
       }
     });
   },
+
+
 
 
     // Ambil kegiatan belajar dari userservices

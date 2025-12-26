@@ -7,6 +7,7 @@ import { UseGetOrder } from "../../hook/useGetOrder";
 import ReminderKelas from "./ReminderKelas";
 import {getDataMenu} from "../../lib/data/getDataMenu";
 import { UseGetBooking } from "../../hook/kelas/useGetBooking";
+import { UseGetGuru } from "../../hook/useGetGuru";
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -16,6 +17,9 @@ const Dashboard = () => {
      const { result, loading  } = UseGetOrder(user?.iduser);
 
     const data = getDataMenu();
+
+    
+    const { guru } = UseGetGuru();
 
   return (
 
@@ -114,7 +118,7 @@ const Dashboard = () => {
           
         <div className="mb-4 p-4 pt-12 md:px-8">
          
-          <ReminderKelas booking={booking} />
+          <ReminderKelas booking={booking} guru={guru} />
           
           <Category />
 
@@ -146,7 +150,7 @@ const Dashboard = () => {
         ))}
       </div>
 
-            <GuruPrivate result={result} />
+            <GuruPrivate result={result}/>
         </div>
 
         

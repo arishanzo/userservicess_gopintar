@@ -259,4 +259,24 @@ public function updateTransaction(Request $request, $order_id)
     }
 }
 
+  public function destroy($iduser)
+    {
+        try {
+        $tugas = Pembayaran::findOrFail($iduser);
+        $tugas->delete();
+
+
+        return response()->json([
+            'success' => true,
+            'message' => 'berhasil dihapus',
+        ], 200);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Gagal menghapus tugas',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+    }
+
 }

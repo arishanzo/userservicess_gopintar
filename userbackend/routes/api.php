@@ -75,6 +75,7 @@ Route::prefix('guru')->middleware(['throttle:100,1', 'service.auth'])->group(fun
        Route::put('/putbookingguru/{idBookingPrivate}', [BookingController::class, 'bookingPutGuru']);
        Route::put('/puttglbooking/{idtglbooking}', [BookingController::class, 'updateNextDays']);
        Route::get('/daftarabsensiguru/{idprofilguru}',[ServiceCommunicationController::class, 'getAbsensiGuru']);
+       Route::put('/saldomasuk/{idguru}',[ServiceCommunicationController::class, 'putsaldoMasuk'])->where('idguru', '[0-9a-fA-F\-]+');
 });
 
 
@@ -114,6 +115,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/midtrans/{iduser}', [PaymentController::class, 'getTransaction']);
     Route::get('/midtrans/cek-status/{order_id}', [PaymentController::class, 'checkStatus']);
     Route::put('/midtrans/updateStatus/{order_id}', [PaymentController::class, 'updateTransaction']);
+
+    Route::delete('/midtrans/{iduser}', [PaymentController::class, 'destroy']);
     
     // Debug route for testing
     Route::get('/midtrans/debug/{order_id}', function($order_id) {
@@ -129,6 +132,8 @@ Route::middleware('auth:sanctum')->group(function () {
     
     Route::get('/booking/{iduser}', [BookingController::class, 'bookingGet']);
     Route::post('/booking', [BookingController::class, 'booking']);
+    Route::put('/booking/{idBookingPrivate}', [BookingController::class, 'bookingPutGuru']);
+
     Route::get('/tglbooking/{iduser}', [BookingController::class, 'tglbookingGet']);
     Route::post('/tglbooking', [BookingController::class, 'tglbookingCreate']);
     Route::put('/tglbooking/{idtglbooking}', [BookingController::class, 'tglbookingUpdate']);

@@ -109,4 +109,9 @@ public function call($service, $endpoint, $method = 'GET', $data = [], $headers 
         {
             return $this->call('guruservices',"services/puttugaskelas/{$idtugasbelajar}", 'PUT', $data );
         }
+
+          public function putSaldoMasuk($idguru, array $data = [])
+        {
+            return $this->call('guruservices',"services/putsaldomasuk/{$idguru}", 'PUT', $data );
+        }
 }
