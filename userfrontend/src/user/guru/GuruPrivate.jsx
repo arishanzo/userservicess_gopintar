@@ -107,7 +107,7 @@ const GuruPrivate = ( { result, user }) => {
     
       const handleSubmit = async (idprofilguru) => {
         
-          sessionStorage.removeItem('selectedGuruId');
+          // sessionStorage.removeItem('selectedGuruId');
 
            const secretKey = 'gopintarguru2025';
            const encrypted = CryptoJS.AES.encrypt(idprofilguru, secretKey);
@@ -293,7 +293,7 @@ const GuruPrivate = ( { result, user }) => {
                 </p>
                 <button 
                 type="button"
-                onClick={() => handleSubmit(mentor?.iduser || '')}
+                onClick={() => handleSubmit(mentor?.idprofilguru || '')}
                 className="w-full bg-green-600 hover:bg-green-700 text-white text-xs py-2 px-3 rounded-lg transition-colors duration-200">
                   Pilih Guru 
                 </button>

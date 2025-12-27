@@ -9,6 +9,7 @@ import CryptoJS from 'crypto-js';
 import Alert from "../components/alert/alert";
 import axiosClient from "../../lib/axios";
 import toast from "react-hot-toast";
+import RatingGuru from "./RatingGuru";
 
 
 const FormKelas = () => {
@@ -30,7 +31,6 @@ const FormKelas = () => {
       }
     }, []);
 
- console.log('selectedGuruId:', selectedGuruId)
 
      const { guru, loading, error } = UseGetGuru();
 
@@ -41,8 +41,6 @@ const FormKelas = () => {
     ? guru?.find(mentor => mentor.idprofilguru === selectedGuruId)
     : null;
 
-    console.log(datamentor)
-    
     const [formData, setFormData] = useState({
         namamurid: "",
         namawalimurid: "",
@@ -217,6 +215,7 @@ const FormKelas = () => {
         {/* Step Forms */}
       <form >
           {currentStep === 0 && (<ProfilGuru datamentor={datamentor}/>)}
+        
           {currentStep === 1 && (<KalenderJadwal  setFormTglDataBooking={setFormTglDataBooking} datamentor={datamentor}  formTglDataBooking={formTglDataBooking}/> )}
           {currentStep === 2 && (<FomulirBooking formData={formData} handleChange={handleChange} datamentor={datamentor} />  )}
           {currentStep === 3 && (<ReviewForm formData={formData} formTglDataBooking={formTglDataBooking} datamentor={datamentor} />  )}
@@ -299,7 +298,7 @@ const FormKelas = () => {
                            }
         </form>
    
-
+  {currentStep === 0 && (<RatingGuru datamentor={datamentor} />)}
    
             {/* Modal Popup */}
             {showModal && (

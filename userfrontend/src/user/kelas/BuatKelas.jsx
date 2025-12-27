@@ -16,7 +16,6 @@ const BuatKelas = () => {
         const encryptedId = sessionStorage.getItem('selectedGuruId');
     
         let selectedGuruId = null;
-    
         if (encryptedId) {
           const bytes = CryptoJS.AES.decrypt(encryptedId, secretKey);
           selectedGuruId = bytes.toString(CryptoJS.enc.Utf8);
@@ -65,6 +64,7 @@ const BuatKelas = () => {
                 
                     <section className="  px-6 w-full">
                               <FormKelas />
+                            
                         </section>
 
             </div>

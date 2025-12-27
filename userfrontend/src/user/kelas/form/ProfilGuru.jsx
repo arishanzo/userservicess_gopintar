@@ -2,48 +2,88 @@ const ProfilGuru = ( { datamentor }) => {
 
     return (
 
-       <>
+       <div className="pb-8 py-4 via-white to-emerald-50 ">
             
-      <h2 className="md:text-xl md:pl-24 text-md text-green-700 font-bold mb-4">Profil Guru Private</h2>
-              <div class="bg-white py-8 mb-4 border border-gray-100 shadow shadow-md shadow-green-100 rounded-xl transition-all duration-300 animate-fade-in">
-        <div class="flex flex-col md:flex-row p-2">
-          <div className="grid grid-cols-2 md:grid-cols-1 gap-1">
-            <div className="md:pl-20 w-full col-span-1 text-center mb-2">
-                <img
-                 src={datamentor.foto_profil ? `http://localhost:8000/api/photosuser/${encodeURIComponent(datamentor.foto_profil)}` : 'https://via.placeholder.com/300'}
-                alt="Profile Picture"
-                className="w-20 h-20 md:w-80 md:h-80 object-cover object-center rounded-xl mx-auto mb-4 transition-transform duration-300 hover:scale-105"
-                />
-            </div>
-           
-            </div>
-            <div class="md:w-2/3 pl-8 md:pl-40">
-              <h1 className="text-xl md:text-4xl font-bold text-green-800 mb-2">
-                {datamentor.user_guru?.name || ''}
-                </h1>
-                <p className="text-gray-600  md:text-xl font-semibold mb-6">{datamentor?.mapel || ''}</p>
-                <p class="text-gray-700 text-sm md:text-lg mb-6">
-                    {datamentor?.aboutguru || ''}
-                </p>
-                <h2 class="text-xl font-semibold text-green-800  mb-4">Skills</h2>
-                <div class="flex flex-wrap text-sm md:text-lg gap-2 mb-6">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-2xl text-start md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600 mb-8 text-center">
+          Profil Guru Private
+        </h2>
+        
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 overflow-hidden transition-all duration-500 hover:shadow-3xl">
+          <div className="relative">
+            {/* Header gradient */}
+            <div className="absolute top-0 left-0 right-0 h-32 md:h-40 bg-gradient-to-r from-green-400 to-emerald-500 opacity-10"></div>
+            
+            <div className="relative p-8 md:p-12">
+              <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8">
+                
+                {/* Profile Image */}
+                <div className="flex-shrink-0">
+                  <div className="relative group">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-green-400 to-emerald-500 rounded-3xl blur opacity-25 group-hover:opacity-75 transition duration-300"></div>
+                    <img
+                      src={datamentor.foto_profil ? `http://localhost:8000/api/photosuser/${encodeURIComponent(datamentor.foto_profil)}` : 'https://via.placeholder.com/300'}
+                      alt="Profile Picture"
+                      className="relative w-32 h-32 md:w-48 md:h-48 object-cover rounded-3xl shadow-xl transition-all duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                </div>
+                
+                {/* Profile Info */}
+                <div className="flex-1 text-center lg:text-left">
+                  <h1 className="text-3xl md:text-5xl font-bold text-gray-800 mb-3 leading-tight">
+                    {datamentor.user_guru?.name || ''}
+                  </h1>
                   
-               <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">{datamentor?.skillpertama || ''}</span>
-                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">{datamentor?.skillkedua || ''}</span>
-                 <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">{datamentor?.skillketiga || ''}</span>
-                  <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">{datamentor?.skillkeempat|| ''}</span>
-               </div>
-
-               
-                <h2 class="text-xl font-semibold text-green-800  mb-2">Bidang Mengajar</h2>
-                <p class="text-gray-700 text-sm md:text-lg mb-6">
-                    {datamentor?.bidangngajar || ''}
-                </p>
+                  <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full mb-6">
+                    <span className="text-green-700 font-semibold text-lg">{datamentor?.mapel || ''}</span>
+                  </div>
+                  
+                  <p className="text-gray-600 text-lg leading-relaxed mb-8 max-w-2xl">
+                    {datamentor?.aboutguru || ''}
+                  </p>
+                  
+                  {/* Skills Section */}
+                  <div className="mb-8">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center justify-center lg:justify-start">
+                      <span className="w-2 h-8 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full mr-3"></span>
+                      Skills
+                    </h3>
+                    <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+                      {[datamentor?.skillpertama, datamentor?.skillkedua, datamentor?.skillketiga, datamentor?.skillkeempat]
+                        .filter(skill => skill)
+                        .map((skill, index) => (
+                          <span 
+                            key={index}
+                            className="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-full text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                          >
+                            {skill}
+                          </span>
+                        ))
+                      }
+                    </div>
+                  </div>
+                  
+                  {/* Teaching Field */}
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center justify-center lg:justify-start">
+                      <span className="w-2 h-8 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full mr-3"></span>
+                      Bidang Mengajar
+                    </h3>
+                    <div className="bg-gradient-to-r from-gray-50 to-green-50 rounded-2xl p-2 border-l-4 border-green-400">
+                      <p className="text-gray-700 text-sm leading-relaxed">
+                        {datamentor?.bidangngajar || ''}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-        </div>
-     
-</>
+      </div>
+    </div>
+    
     )
 }
 
