@@ -21,7 +21,7 @@ const [rating, setRating] = useState(0);
 const [hoverRating, setHoverRating] = useState(0);
 const [ comment ,setComment] = useState('');
 
-const cariIDGuru = guru?.find((g) => g.idprofilguru === booking[0]?.idprofilguru).user_guru?.idguru;
+const cariIDGuru = guru?.find((g) => g.idprofilguru === booking[0]?.idprofilguru)?.user_guru?.idguru || '';
 
   const allBookingDates = useMemo(() => {
          return booking && booking.length > 0 
