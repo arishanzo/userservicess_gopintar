@@ -55,7 +55,7 @@ const tglAbsen = absensiGuru?.filter((item) => {
 
      const saldoData = {
        idbookingprivate: idbookingprivate,
-       jumlahsaldomasuk: 310000,
+       jumlahsaldomasuk: 306000,
        tglsaldomasuk: now.toISOString().split('T')[0]
      };
      
