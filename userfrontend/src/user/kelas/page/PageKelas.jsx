@@ -2,6 +2,7 @@ import { useState } from "react";
 import KelasAktif from "./pagetab/KelasAktif";
 import MateriKelas from "./pagetab/MateriKelas";
 import TugasKelas from "./pagetab/TugasKelas";
+import { ArrowLeft } from "lucide-react";
 
 const PageKelas = ( { booking}) => {
     
@@ -12,6 +13,13 @@ const PageKelas = ( { booking}) => {
 <div className=" rounded-lg shadow-sm  mb-6">
   <div className="border-b border-gray-200">
     <nav className="flex overflow-x-auto flex-nowrap space-x-6 px-4 md:px-6 scrollbar-hide">
+                           <button
+  onClick={() => window.history.back()}
+  className="flex  items-center space-x-2 px-4 py-2 mb-2 bg-green-100 hover:bg-green-200 text-green-700 rounded-md"
+>
+  <ArrowLeft className="w-5 h-5" />
+</button>
+
       {/* Tab: Kelas */}
       <button
         onClick={() => setActiveTab("kelas")}

@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import { useState } from "react";
 import FormProfil from "./FormProfil";
 import Keamanan from "./Keamanan";
+import { ArrowLeft } from "lucide-react";
 
 const Profil = () => {
 
@@ -22,7 +23,15 @@ const Profil = () => {
                  {/* Tab Navigation */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
             <div className="border-b border-gray-200">
-              <nav className="flex space-x-8 px-6">
+              <nav className="flex space-x-8 px-6 mt-4">
+
+                                <button
+  onClick={() => window.history.back()}
+  className="flex  items-center space-x-2 px-4 py-2 mb-2 bg-green-100 hover:bg-green-200 text-green-700 rounded-md"
+>
+  <ArrowLeft className="w-5 h-5" />
+</button>
+
                 <button 
                 onClick={() => setActiveTab('profil')}
                

@@ -97,26 +97,64 @@ const Checkout = () => {
 
     {loading ? (
 
-       <div className="min-h-screen flex items-center justify-center">
- <div className="p-8 border border-gray-200 rounded-2xl shadow-sm flex flex-col animate-pulse">
-            <div className="h-6 bg-gray-200 rounded w-1/3 mb-4"></div>
-            <div className="h-10 bg-gray-200 rounded w-2/3 mb-6"></div>
-            <div className="h-4 bg-gray-200 rounded w-full mb-4"></div>
-            <div className="space-y-3">
-              <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-              <div className="h-4 bg-gray-200 rounded w-4/6"></div>
-              <div className="h-4 bg-gray-200 rounded w-3/6"></div>
-              <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-            </div>
-            <div className="mt-8 h-10 bg-gray-200 rounded"></div>
+<div className="md:pt-24 pt-40 py-8 animate-pulse p-4">
+
+      {/* Breadcrumb */}
+      <div className="mb-8">
+        <div className="h-5 w-72 bg-gray-200 rounded" />
+      </div>
+
+      {/* Header */}
+      <div className="p-6 rounded-2xl bg-gray-200 mb-6">
+        <div className="h-8 w-56 bg-gray-300 rounded mb-3" />
+        <div className="h-4 w-72 bg-gray-300 rounded" />
+      </div>
+
+      {/* Content */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        {/* Invoice */}
+        <div className="bg-white rounded-2xl shadow-xl p-6 space-y-4">
+          <div className="h-10 w-40 bg-gray-200 rounded mx-auto" />
+          <div className="h-4 w-full bg-gray-200 rounded" />
+          <div className="h-4 w-2/3 bg-gray-200 rounded" />
+
+          <div className="space-y-2">
+            <div className="h-4 w-1/2 bg-gray-200 rounded" />
+            <div className="h-4 w-3/4 bg-gray-200 rounded" />
+            <div className="h-4 w-2/3 bg-gray-200 rounded" />
           </div>
+
+          <div className="h-6 w-full bg-gray-200 rounded mt-6" />
+          <div className="h-4 w-1/2 bg-gray-200 rounded mx-auto" />
+        </div>
+
+        {/* Detail Pembayaran */}
+        <div className="bg-white rounded-2xl shadow-xl p-6 space-y-6">
+          <div className="h-6 w-48 bg-gray-200 rounded" />
+
+          <div className="flex flex-col md:flex-row gap-6">
+            <div className="h-48 w-full md:w-48 bg-gray-200 rounded-lg" />
+
+            <div className="flex-1 space-y-3">
+              <div className="h-4 w-3/4 bg-gray-200 rounded" />
+              <div className="h-4 w-full bg-gray-200 rounded" />
+              <div className="h-4 w-5/6 bg-gray-200 rounded" />
+              <div className="h-4 w-2/3 bg-gray-200 rounded" />
             </div>
+          </div>
+
+          <div className="h-14 w-full bg-gray-200 rounded-lg" />
+        </div>
+
+      </div>
+    </div>
 
        ) : (
 
         
 
-        <div className=" md:pt-24 pt-16 py-8 ">
+        <div className=" md:pt-24 pt-40 p-4 ">
       
                   <div className="mb-8 ">
         <nav aria-label="breadcrumb ">
@@ -154,7 +192,7 @@ const Checkout = () => {
                     <div className="bg-white pt-0 rounded-2xl shadow-xl ">
         
         {result && (
-            <div className="bg-white border rounded-lg shadow-lg px-6 max-w-full mx-auto mt-8 py-8 p-4">
+            <div className="bg-white border rounded-lg shadow-lg px-6 max-w-full mx-auto mt-8 py-8 p-4 ">
                 <h1 className="font-bold md:text-3xl lg:text-4xl my-4 text-center text-green-600">GoPintar</h1>
                 <hr className="mb-2 py-2"/>
                 <div className="flex justify-between mb-6">
@@ -207,7 +245,7 @@ const Checkout = () => {
 </div>
 
                     {/* Payment Detail Section */}
-                    <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
+                    <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 mb-20">
                         <h2 className="text-xl font-semibold mb-6 text-gray-800">Detail Pembayaran</h2>
                         
                         {result?.metodepembayaran === "qris" && (

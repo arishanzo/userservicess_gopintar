@@ -17,7 +17,7 @@ export const UseGetRatingGuru = () => {
           try {
     
             setLoading(true);
-            const ratingGuruget = await getFetchCache( () => getRatingService({ signal: controller.signal }), 5, 3000);
+            const ratingGuruget = await getFetchCache( () => getRatingService({ signal: controller.signal }), 1, 0);
             setratingGuru(ratingGuruget?.data || null);
     
        } catch (error) {

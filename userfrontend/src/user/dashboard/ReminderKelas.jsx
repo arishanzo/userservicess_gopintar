@@ -8,7 +8,7 @@ import { UseGetGuru } from "../../hook/useGetGuru";
 const ReminderKelas = ({ booking }) => {
 
 const now = new Date();
-const { absensiGuru } = UseGetAbsensiGuru(booking[0]?.idprofilguru);
+const { absensiGuru } = UseGetAbsensiGuru(booking[0]?.idprofilguru || '');
 const { guru } = UseGetGuru();
 
 

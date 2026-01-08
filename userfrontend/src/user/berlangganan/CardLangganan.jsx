@@ -1,4 +1,5 @@
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const CardLangganan = () => {
@@ -7,8 +8,19 @@ const CardLangganan = () => {
     return (
         <div className=" md:pt-24 pt-16 py-16  ">
             <div className='py-4'>
+                  <div className="flex items-center space-x-8 md:pl-8 py-2 md:py-4">
+ <button
+  onClick={() => window.history.back()}
+  className="flex items-center space-x-2 px-4 py-2 bg-green-100 hover:bg-green-200 text-green-700 rounded-md"
+>
+  <ArrowLeft className="w-5 h-5" />
+</button>
+</div>
+           <div>
                 <h2 className="text-2xl font-bold text-center sm:text-4xl">Paket Berlangganan</h2>
                 <p className="max-w-3xl mx-auto text-xs md:text-xl py-2 text-center">Pilih paket yang sesuai untuk pembelajaran anak Anda</p>
+            </div>
+            
             </div>
             
             <div className="mt-12 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-x-8">

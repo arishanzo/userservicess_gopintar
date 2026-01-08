@@ -11,6 +11,7 @@ const categories = getDataCategoryBelajar();
   return (
     <div className="mb-4 md:pt-4 py-4">
       <div className="flex mx-auto  px-2 md:px-8 items-center justify-between mb-6">
+        
         <h2 className="text-xl font-bold text-green-800">📚 Kategori Pelajaran</h2>
       </div>
 

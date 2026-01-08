@@ -22,7 +22,7 @@ export const UseGetOrder = (iduser) => {
           try {
     
             setLoading(true);
-            const resultget = await getFetchCache( () => getOrder(iduser, { signal: controller.signal }), 5, 3000);
+            const resultget = await getFetchCache( () => getOrder(iduser, { signal: controller.signal }), 1, 0);
             setResult(resultget?.data || null);
     
        } catch (error) {

@@ -20,8 +20,8 @@ export const UseGetBooking = (iduser) => {
           try {
     
             setLoading(true);
-            const Bookingget = await getFetchCache( () => getBooking(iduser, { signal: controller.signal }), 5, 3000);
-             setBooking(Bookingget.data || null);
+            const Bookingget = await getFetchCache( () => getBooking(iduser, { signal: controller.signal }), 1, 0);
+             setBooking(Bookingget.data || []);
     
             } catch (error) {
 

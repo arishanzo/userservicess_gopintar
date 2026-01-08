@@ -7,6 +7,7 @@ import { getDataPayment } from "../../lib/data/getDataPayment";
 import axiosClient from "../../lib/axios";
 import toast from "react-hot-toast";
 import { UseGetOrder } from "../../hook/useGetOrder";
+import { ArrowLeft } from "lucide-react";
 
 const FormLangganan = () => {
 
@@ -150,11 +151,21 @@ const FormLangganan = () => {
 
        ) : (
 
+        
          // Main content area 
          <div className="w-full h-full  flex items-center justify-start md:px-12 px-2  md:pt-8 ">
+
+          
         <section class="bg-gray-50  px-6 w-full">
+
+           <button
+  onClick={() => window.history.back()}
+  className="flex items-center space-x-2 px-4 py-2 mb-4 bg-green-100 hover:bg-green-200 text-green-700 rounded-md"
+>
+  <ArrowLeft className="w-5 h-5" />
+</button>
       
-  <div class="max-w-6xl border-t border-gray-200 py-4  bg-white shadow-xl rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
+  <div class="max-w-8xl border-t border-gray-200 py-4  bg-white shadow-xl rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
     
     
  

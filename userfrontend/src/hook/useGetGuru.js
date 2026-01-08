@@ -17,7 +17,7 @@ export const UseGetGuru = () => {
       try {
 
         setLoading(true);
-        const result = await getFetchCache( () => getGuruService({ signal: controller.signal }), 5, 3000);
+        const result = await getFetchCache( () => getGuruService({ signal: controller.signal }), 1, 0);
     
         setGuru(result || []);
 

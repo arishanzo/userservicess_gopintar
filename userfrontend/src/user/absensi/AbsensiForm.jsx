@@ -5,6 +5,7 @@ import axiosClient  from "../../lib/axios";
 import { toast } from "react-hot-toast";
 import { UseGetBooking } from "../../hook/kelas/useGetBooking";
 import { UseGetAbsensiUser } from "../../hook/useGetAbsensiUser";
+import { ArrowLeft } from "lucide-react";
 
 const AbsensiForm = () => {
   const { user } = useAuth();
@@ -196,8 +197,19 @@ const AbsensiForm = () => {
   
 
       <header className="mb-6 ">
+                  <div className="flex items-center space-x-8">
+ <button
+  onClick={() => window.history.back()}
+  className="flex items-center space-x-2 px-4 py-2 bg-green-100 hover:bg-green-200 text-green-700 rounded-md"
+>
+  <ArrowLeft className="w-5 h-5" />
+</button>
+
+  <div>
         <h1 className="md:text-2xl text-xl  text-green-800 font-bold">Jadwal / Absensi Kelas</h1>
         <p className="text-sm text-gray-600">Jika Siswa Berhalang Bisa Menekan Tombol Izin dan Siswa Bisa Mengubah Jam Sesi Kelas</p>
+     </div>
+     </div>
       </header>
 
 
@@ -252,8 +264,9 @@ const AbsensiForm = () => {
             {/* Jadwal Hari Ini */}
       <div className="bg-white shadow-lg rounded-2xl p-4 mb-6">
         <div className="flex items-center justify-between mb-4">
+
           <h3 className="text-lg font-semibold text-green-800">📅 Jadwal / Absensi Kelas</h3>
-          
+        
         </div>
         <div className="space-y-8">
           {/* Jadwal Kelas */}

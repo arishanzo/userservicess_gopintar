@@ -7,7 +7,7 @@ import ModalImage from "../../showmodal/ModalImage";
 
 const KelasAktif = ({ booking }) => {
       const { guru, loading } = UseGetGuru();
-      const  {kegiatanBelajar, loadingKegiatanBelajar } = UseGetKegiatanBelajar(booking[0]?.idbookingprivate);
+      const  {kegiatanBelajar, loadingKegiatanBelajar } = UseGetKegiatanBelajar(booking[0]?.idbookingprivate || 0);
      
 
 
