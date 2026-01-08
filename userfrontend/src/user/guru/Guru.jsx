@@ -7,12 +7,19 @@ import { useAuth } from "../../context/AuthContext";
 import Category from "../dashboard/Category";
 import { UseGetGuru } from "../../hook/useGetGuru";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { UseGetProfil } from "../../hook/useGetProfil";
+import { UseGetBooking } from "../../hook/kelas/useGetBooking";
+import { UseGetRatingGuru } from "../../hook/useGetRatingGuru";
 const Guru = () => {
- const { user } = useAuth();
- const { result, loading } = UseGetOrder(user?.iduser);
+    const { user } = useAuth();
+    const { profil } = UseGetProfil(user?.iduser || '');
 
- const { guru } = UseGetGuru();
- 
+
+    const { result, loading } = UseGetOrder(user?.iduser);
+    const { booking } = UseGetBooking(user?.iduser || '');
+
+    const { guru } = UseGetGuru();
+    const { ratingGuru } =  UseGetRatingGuru();
 
   return (
 
@@ -24,7 +31,7 @@ const Guru = () => {
     {/* Main content area */}
     <div className="flex-1   top-0 min-h-screen w-[80%]">
           
-                  <div className="w-full h-full py-24 p-4 sm:pt-28 ">
+                  <div className="w-full h-full py-24 p-6 sm:pt-28 ">
                     {loading ? (
                         <>
                           {/* Header */}
@@ -74,16 +81,17 @@ const Guru = () => {
 
 ) : (
   <>
-  <div className="flex items-center space-x-8 md:pl-8 py-2 md:py-4">
- <button
-  onClick={() => window.history.back()}
-  className="flex items-center space-x-2 px-4 py-2 bg-green-100 hover:bg-green-200 text-green-700 rounded-md"
->
-  <ArrowLeft className="w-5 h-5" />
-</button>
-</div>
-            <Category/>
-            <GuruPrivate  result={result} guru={guru}  user={user}/>
+        <div className="flex items-center space-x-2 md:pl-8 py-2 mb-2 md:py-4">
+      <button
+        onClick={() => window.history.back()}
+        className="flex items-center space-x-2 px-4 py-2 bg-green-100 hover:bg-green-200 text-green-700 rounded-md"
+      >
+        <ArrowLeft className="w-5 h-5" />
+      </button>
+      <h1 className="md:text-2xl text-md font-semibold text-green-800">Guru Pilihan Untukmu</h1>
+      </div>
+                  <Category/>
+            <GuruPrivate  result={result} guru={guru}  user={user} profil={profil} ratingGuru={ratingGuru} booking={booking}/>
             </>
 )}
 

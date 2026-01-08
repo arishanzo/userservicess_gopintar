@@ -81,10 +81,12 @@ useEffect(() => {
                 <button
                   onClick={() => setShowProfile(!showProfile)}
                   className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                >
+                > <svg className="w-5 h-5 mb-1 text-gray-500 group-hover:text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
 
-                  <div className="md:block text-left">
-                    <p className="text-sm font-medium text-gray-900">{user?.nama_user || "Guest"}</p>
+                  <div className="hidden md:block text-left">
+                    <p className="md:text-sm text-xs font-medium text-gray-900">{user?.nama_user || "Guest"}</p>
                     <p className="text-xs text-gray-500">Student Go-Pintar</p>
                   </div>
                   <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,21 +172,7 @@ useEffect(() => {
             {/* Right side - Notifications */}
             <div className="flex items-center space-x-4">
               
-              {/* Quick Actions */}
-              <div className="flex items-center space-x-2">
-                <a
-                  href="https://wa.me/6281234567890"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-green-700 bg-green-100 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors"
-                >
-                  <svg className="w-4 h-4 md:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                  <span className="hidden md:inline">Hubungi Admin</span>
-                </a>
-              </div>
-
+             
               {/* Notifications */}
               <div className="relative">
                 <button
@@ -263,25 +251,29 @@ useEffect(() => {
             <span className="text-xs text-gray-500 group-hover:text-green-600">Home</span>
           </Link>
           
-          <Link to="/cari-guru" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 group">
-            <svg className="w-5 h-5 mb-1 text-gray-500 group-hover:text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <span className="text-xs text-gray-500 group-hover:text-green-600">Cari</span>
+          <Link to="/guru" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 group">
+         <svg className="w-5 h-5 mb-1 text-gray-500 group-hover:text-green-600"
+  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+</svg>
+            <span className="text-xs text-gray-500 group-hover:text-green-600">Guru</span>
           </Link>
           
-          <Link to="/kelas-saya" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 group">
+          <Link to="/kelas" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 group">
             <svg className="w-5 h-5 mb-1 text-gray-500 group-hover:text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
             <span className="text-xs text-gray-500 group-hover:text-green-600">Kelas</span>
           </Link>
           
-          <Link to="/pesan" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 group relative">
-            <svg className="w-5 h-5 mb-1 text-gray-500 group-hover:text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-            </svg>
-            <span className="text-xs text-gray-500 group-hover:text-green-600">Pesan</span>
+          <Link to="/berlangganan" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 group relative">
+          <svg className="w-5 h-5 mb-1 text-gray-500 group-hover:text-green-600"
+          fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+            d="M3 10h18M7 15h1m4 0h2M5 6h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z" />
+        </svg>
+            <span className="text-xs text-gray-500 group-hover:text-green-600">Langganan</span>
             <span className="absolute top-2 right-3 block h-2 w-2 rounded-full bg-red-400"></span>
           </Link>
           

@@ -8,18 +8,22 @@ import ReminderKelas from "./ReminderKelas";
 import {getDataMenu} from "../../lib/data/getDataMenu";
 import { UseGetBooking } from "../../hook/kelas/useGetBooking";
 import { UseGetGuru } from "../../hook/useGetGuru";
+import { UseGetProfil } from "../../hook/useGetProfil";
+import { UseGetRatingGuru } from "../../hook/useGetRatingGuru";
 
 const Dashboard = () => {
     const { user } = useAuth();
+    const { profil } = UseGetProfil(user?.iduser || '');
     
      const { booking } = UseGetBooking(user?.iduser) ;
-      
      const { result, loading  } = UseGetOrder(user?.iduser);
 
-    const data = getDataMenu();
     
     const { guru } = UseGetGuru();
+    const { ratingGuru } =  UseGetRatingGuru();
 
+    
+    const data = getDataMenu();
   return (
 
     <>
@@ -32,7 +36,7 @@ const Dashboard = () => {
           
      {loading ? (
 
-              <div className="w-full h-full py-16 p-4 sm:pt-20 ">
+              <div className="w-full h-full py-12 p-4 sm:pt-20 ">
 
 <div className="mb-4 md:pt-8 md:px-8 animate-pulse">
   {/* Header */}
@@ -112,10 +116,10 @@ const Dashboard = () => {
        ) : (
 
          // Main content area 
-              <div className="w-full h-full py-16 p-2 sm:pt-20 ">
+              <div className="w-full h-full py-12 p-2 sm:pt-20 ">
           
           
-        <div className="mb-4 p-4 pt-12 md:px-8">
+        <div className="mb-4 p-4 pt-12 md:px-8 bg-gray-70">
          
           <ReminderKelas booking={booking} guru={guru} />
           
@@ -149,7 +153,7 @@ const Dashboard = () => {
         ))}
       </div>
 
-            <GuruPrivate result={result} user={user}/>
+            <GuruPrivate result={result} user={user} profil={profil} booking={booking} ratingGuru={ratingGuru} guru={guru}/>
         </div>
 
         

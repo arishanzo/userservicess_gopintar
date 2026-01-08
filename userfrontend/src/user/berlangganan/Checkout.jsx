@@ -154,7 +154,7 @@ const Checkout = () => {
 
         
 
-        <div className=" md:pt-24 pt-40 p-4 ">
+        <div className=" md:pt-24 pt-24 p-4 ">
       
                   <div className="mb-8 ">
         <nav aria-label="breadcrumb ">
@@ -182,7 +182,7 @@ const Checkout = () => {
         </div>
                 
                 <div className="bg-gradient-to-r from-green-600 to-emerald-600 p-6 text-white rounded-t-2xl md:rounded-2xl md:mb-6">
-                    <h1 className="text-3xl font-bold mb-2">Struk Pembayaran</h1>
+                    <h1 className="md:text-3xl text-xl font-bold mb-2">Struk Pembayaran</h1>
                     <p className="text-green-100 opacity-80">Silahkan Selesaikan Pembayaran Anda</p>
                 </div>
                 
@@ -192,8 +192,8 @@ const Checkout = () => {
                     <div className="bg-white pt-0 rounded-2xl shadow-xl ">
         
         {result && (
-            <div className="bg-white border rounded-lg shadow-lg px-6 max-w-full mx-auto mt-8 py-8 p-4 ">
-                <h1 className="font-bold md:text-3xl lg:text-4xl my-4 text-center text-green-600">GoPintar</h1>
+            <div className="bg-white rounded-lg px-6 max-w-full mx-auto  p-4 ">
+                <h1 className="font-bold md:text-3xl text-3xl lg:text-4xl my-4 text-center text-green-600">GoPintar</h1>
                 <hr className="mb-2 py-2"/>
                 <div className="flex justify-between mb-6">
                     <h1 className="text-lg font-bold">Invoice</h1>

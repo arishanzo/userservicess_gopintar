@@ -9,21 +9,21 @@ const CardLangganan = () => {
         <div className=" md:pt-24 pt-16 py-16  ">
             <div className='py-4'>
                   <div className="flex items-center space-x-8 md:pl-8 py-2 md:py-4">
- <button
-  onClick={() => window.history.back()}
-  className="flex items-center space-x-2 px-4 py-2 bg-green-100 hover:bg-green-200 text-green-700 rounded-md"
->
-  <ArrowLeft className="w-5 h-5" />
-</button>
-</div>
-           <div>
+                <button
+                onClick={() => window.history.back()}
+                className="flex items-center space-x-2 px-4 py-2 bg-green-100 hover:bg-green-200 text-green-700 rounded-md"
+                >
+                <ArrowLeft className="w-5 h-5" />
+                </button>
                 <h2 className="text-2xl font-bold text-center sm:text-4xl">Paket Berlangganan</h2>
-                <p className="max-w-3xl mx-auto text-xs md:text-xl py-2 text-center">Pilih paket yang sesuai untuk pembelajaran anak Anda</p>
+                </div>
+                        <div>
+                <p className="max-w-3xl mx-auto text-xs md:text-xl py-2 text-gray-400 text-center">Pilih paket yang sesuai untuk pembelajaran anak Anda</p>
             </div>
             
             </div>
             
-            <div className="mt-12 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-x-8">
+            <div className=" space-y-12 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-x-8">
                 <div className="relative border border-gray-200 rounded-2xl shadow-sm flex flex-col">
                     <div className="flex-1 h-96 md:h-full">
                         <DotLottieReact
@@ -36,13 +36,13 @@ const CardLangganan = () => {
                 
                 <div className="p-8 border border-gray-200 rounded-2xl shadow-sm ">
                     <div className="flex-1">
-                        <h3 className="text-xl font-semibold">Premium</h3>
+                        <h3 className="text-xl font-semibold">Paket Belajar</h3>
                         <p className="absolute top-0 py-1.5 px-4 bg-emerald-500 text-white rounded-full text-xs font-semibold uppercase tracking-wide transform -translate-y-1/2">
                             Terpopuler
                         </p>
                         <p className="mt-4 flex items-baseline">
-                            <span className="text-5xl font-extrabold tracking-tight">Rp355.000</span>
-                            <span className="ml-1 text-xl font-semibold">/ 15 Pertemuan</span>
+                            <span className="md:text-5xl text-3xl font-extrabold tracking-tight">Rp355.000</span>
+                            <span className="ml-1 md:text-xl text-lg font-semibold">/ 15 Pertemuan</span>
                         </p>
                         <p className="mt-6">Untuk pembelajaran optimal anak</p>
                         <ul role="list" className="mt-6 space-y-6">

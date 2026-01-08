@@ -5,7 +5,6 @@ import CryptoJS from 'crypto-js';
 import {  useEffect,  useState } from 'react';
 import { UseGetGuru } from "../../hook/useGetGuru";
 import { UseGetBooking } from "../../hook/kelas/useGetBooking";
-import { UseGetProfil } from "../../hook/useGetProfil";
 import { UseGetRatingGuru } from "../../hook/useGetRatingGuru";
 
 
@@ -51,19 +50,13 @@ const KabupatenName = ({ kecamatanId, kabupatenId }) => {
 };
 
 
-const GuruPrivate = ( { result, user }) => {
+const GuruPrivate = ( { result, profil, booking, guru, ratingGuru }) => {
    const [kategori, setKategori] = useState("Filter");
 
   const [showModal, setShowModal] = useState(false);
   
   const [showModalBooking, setShowModalBooking] = useState(false);
 
-
-  
-    const { profil } = UseGetProfil(user?.iduser || '');
-    const { guru } = UseGetGuru();
-    const { booking } = UseGetBooking(user?.iduser || '');
-    const { ratingGuru } =  UseGetRatingGuru();
 
 
   const queryParams = new URLSearchParams(window.location.search);
@@ -134,10 +127,10 @@ const GuruPrivate = ( { result, user }) => {
 
 
 <div className="pt-2 md:py-2 sm:py-8 overflow-x-hidden" id='mentor'>
-   <div className="mx-auto py-8 px-2 md:px-8">
-      <div className="mb-2 text-center">
-        <div className="flex items-center justify-between gap-12">
-          <h2 className="text-xl font-bold text-green-800 lg:text-xl">
+   <div className="mx-auto  md:px-8">
+      <div className="mb-2 md:text-center text-start">
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-md font-bold text-green-800 lg:text-xl">
              👨‍🏫 Guru di Kecamatan <KabupatenName kabupatenId={profil?.kabupaten} kecamatanId={profil?.kecamatan} />
           </h2>
 
@@ -166,7 +159,7 @@ const GuruPrivate = ( { result, user }) => {
   {/* Loading state */}
         {!guru ? (
           
-     <div className="hidden md:grid px-2 md:px-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-10">
+     <div className=" px-2 md:px-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-10">
             {[...Array(20)].map((_, i) => (
               <div key={i} className="flex-shrink-0 w-40 py-4">
                 <div className="bg-white rounded-xl shadow-lg">
@@ -187,7 +180,7 @@ const GuruPrivate = ( { result, user }) => {
         ) : (
 
     <div className="">
-    <div className="grid px-2 md:px-8 grid-cols-3 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-8 xl:grid-cols-8 gap-4 md:gap-10">
+    <div className="grid px-2 md:px-8 grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-8 xl:grid-cols-8 gap-4 md:gap-10">
   {hasilFilter.length === 0 ? (
     <div className="col-span-full flex justify-center items-center py-16 px-4">
       <div className="rounded-2xl p-8 max-w-md w-full text-center">

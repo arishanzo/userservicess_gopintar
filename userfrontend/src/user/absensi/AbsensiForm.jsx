@@ -192,7 +192,7 @@ const AbsensiForm = () => {
 
 
   return (
-    <div className="w-full mx-auto mb-4 md:px-4">
+    <div className="w-full mx-auto mb-4 p-4 md:px-4">
       
   
 
@@ -207,7 +207,7 @@ const AbsensiForm = () => {
 
   <div>
         <h1 className="md:text-2xl text-xl  text-green-800 font-bold">Jadwal / Absensi Kelas</h1>
-        <p className="text-sm text-gray-600">Jika Siswa Berhalang Bisa Menekan Tombol Izin dan Siswa Bisa Mengubah Jam Sesi Kelas</p>
+        <p className="text-xs mt-2 text-gray-600">Jika Siswa Berhalang Bisa Menekan Tombol Izin dan Siswa Bisa Mengubah Jam Sesi Kelas</p>
      </div>
      </div>
       </header>

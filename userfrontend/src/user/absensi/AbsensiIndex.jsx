@@ -17,7 +17,7 @@ const AbsensiIndex = () => {
     <div className="flex-1   top-0 min-h-screen w-[80%]">
           
      
-              <div className="w-full h-full py-24 p-4 sm:pt-24 ">
+              <div className="w-full h-full py-20 p-4 sm:pt-24 ">
           <AbsensiForm />
         </div>
 
