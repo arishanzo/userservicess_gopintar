@@ -76,7 +76,7 @@ const Checkout = () => {
     }, [result, statuspembayaran]);
 
     useEffect(() => {
-        if (statuspembayaran === "settlement" && timer > 0) {
+        if (statuspembayaran === "settlement" ||  statuspembayaran === "expire"  && timer > 0) {
             const countdown = setTimeout(() => setTimer(timer - 1), 1000);
             return () => clearTimeout(countdown);
         }

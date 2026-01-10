@@ -116,7 +116,7 @@ const Dashboard = () => {
        ) : (
 
          // Main content area 
-              <div className="w-full h-full py-12 p-2 sm:pt-20 ">
+              <div className="w-full h-full py-12 p-4 sm:pt-20 ">
           
           
         <div className="mb-4 p-4 pt-12 md:px-8 bg-gray-70">

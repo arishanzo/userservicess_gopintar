@@ -88,7 +88,7 @@ const Guru = () => {
       >
         <ArrowLeft className="w-5 h-5" />
       </button>
-      <h1 className="md:text-2xl text-md font-semibold text-green-800">Guru Pilihan Untukmu</h1>
+   
       </div>
                   <Category/>
             <GuruPrivate  result={result} guru={guru}  user={user} profil={profil} ratingGuru={ratingGuru} booking={booking}/>

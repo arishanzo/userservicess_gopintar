@@ -3,12 +3,6 @@
 import { useNavigate } from "react-router-dom";
 import CryptoJS from 'crypto-js';
 import {  useEffect,  useState } from 'react';
-import { UseGetGuru } from "../../hook/useGetGuru";
-import { UseGetBooking } from "../../hook/kelas/useGetBooking";
-import { UseGetRatingGuru } from "../../hook/useGetRatingGuru";
-
-
-
 
 const DesaName = ({ desaId, kecamatanId }) => {
   const [desaName, setDesaName] = useState("");
@@ -112,7 +106,7 @@ const GuruPrivate = ( { result, profil, booking, guru, ratingGuru }) => {
                setShowModal(true);
              }else if (booking.statusbooking === 'Sudah Mulai') {
                 setShowModalBooking(true);
-             }else if (selectedGuruId) {
+             } else if (selectedGuruId) {
                 setShowModal(true);
              }else{
              sessionStorage.setItem('selectedGuruId', encrypted);
@@ -286,6 +280,7 @@ const GuruPrivate = ( { result, profil, booking, guru, ratingGuru }) => {
                 </p>
                 <button 
                 type="button"
+                hidden={result?.idprofilguru === mentor?.idprofilguru}
                 onClick={() => handleSubmit(mentor?.idprofilguru || '')}
                 className="w-full bg-green-600 hover:bg-green-700 text-white text-xs py-2 px-3 rounded-lg transition-colors duration-200">
                   Pilih Guru 

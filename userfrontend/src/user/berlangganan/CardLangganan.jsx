@@ -15,10 +15,11 @@ const CardLangganan = () => {
                 >
                 <ArrowLeft className="w-5 h-5" />
                 </button>
-                <h2 className="text-2xl font-bold text-center sm:text-4xl">Paket Berlangganan</h2>
-                </div>
+                  </div>
                         <div>
-                <p className="max-w-3xl mx-auto text-xs md:text-xl py-2 text-gray-400 text-center">Pilih paket yang sesuai untuk pembelajaran anak Anda</p>
+                             <h2 className="text-2xl font-bold text-center sm:text-4xl">Paket Berlangganan</h2>
+             
+                <p className="max-w-3xl mx-auto text-xs text-center md:text-xl py-2 text-gray-400 ">Pilih paket yang sesuai untuk pembelajaran anak Anda</p>
             </div>
             
             </div>

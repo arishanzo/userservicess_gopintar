@@ -13,17 +13,15 @@ class BookingController extends Controller
 {
     public function bookingGet($iduser){
 
-
            $booking = Booking::with('User_Login', 'Tgl_Booking_Kelas')->where('iduser', $iduser)->get();
          
 
              return response()->json([
             'status' => 200,
             'data' => $booking,
-            'message' => $booking ? 'Bookinf Ada' : 'Booking Tidak Ada'
+            'message' => $booking ? 'Booking Ada' : 'Booking Tidak Ada'
         ]);
 
-       
     }
 
 

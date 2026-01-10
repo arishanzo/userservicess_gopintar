@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import axiosClient from "../../lib/axios";
 // import UseNotifications from "../../hook/useNotifications";
@@ -65,6 +65,10 @@ useEffect(() => {
     }
   };
 
+    const navItemClass = ({ isActive }) =>
+  `flex flex-col items-center justify-center gap-1 transition-all
+   ${isActive ? "text-green-600" : "text-gray-400 hover:text-green-500"}`;
+ 
   
  
 
@@ -107,26 +111,21 @@ useEffect(() => {
                         </svg>
                         Profil Saya
                       </Link>
-                      <Link
-                        to="/pengaturan"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        Pengaturan
-                      </Link>
-                      <Link
-                        to="/bantuan"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Bantuan
-                      </Link>
-                      <div className="border-t border-gray-100">
+                    
+                      <a
+                      href="https://wa.me/6281234567890"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                          d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      Bantuan
+                    </a>
+                                          <div className="border-t border-gray-100">
                         <button
                           onClick={async () => {
                            try {
@@ -242,7 +241,7 @@ useEffect(() => {
       </nav>
 
       {/* Mobile Bottom Navigation */}
-      <div className="md:hidden fixed bottom-0 left-0 z-50 w-full bg-white border-t border-gray-200">
+      {/* <div className="md:hidden fixed bottom-0 left-0 z-50 w-full bg-white border-t border-gray-200">
         <div className="grid h-16 max-w-lg grid-cols-5 mx-auto">
           <Link to="/dashboard" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 group">
             <svg className="w-5 h-5 mb-1 text-gray-500 group-hover:text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -284,7 +283,70 @@ useEffect(() => {
             <span className="text-xs text-gray-500 group-hover:text-green-600">Profil</span>
           </Link>
         </div>
+      </div> */}
+
+
+      
+<div className="md:hidden fixed bottom-3 left-0 right-0 z-50 px-4">
+      <div className="mx-auto max-w-lg rounded-2xl bg-white/90 backdrop-blur shadow-xl border border-gray-100">
+        <div className="grid grid-cols-5 h-16">
+                      
+                      {/* Kelas */}
+            <NavLink to="/kelas" className={navItemClass}>
+               <svg className="w-5 h-5 mb-1  group-hover:text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+              <span className="text-[11px] font-medium">Kelas</span>
+            </NavLink>
+
+            {/* Jadwal */}
+            <NavLink to="/guru" className={navItemClass}>
+                   <svg className="w-5 h-5 mb-1 group-hover:text-green-600"
+  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+</svg>
+            <span className="text-xs group-hover:text-green-600">Guru</span>
+            </NavLink>
+
+            {/* Home / Kelas Utama (Center Action) */}
+            <NavLink
+              to="/dashboard"
+              className="relative -top-5 flex items-center justify-center"
+            >
+              <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-green-500 to-green-600 shadow-xl flex items-center justify-center text-white">
+               <svg className="w-7 h-7 mb-1 text-white group-hover:text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+              </div>
+            </NavLink>
+
+            {/* Saldo */}
+            <NavLink to="/berlangganan" className={navItemClass}>
+              <div className="relative">
+                   <svg className="w-5 h-5 mb-1 group-hover:text-green-600"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                d="M3 10h18M7 15h1m4 0h2M5 6h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z" />
+            </svg>
+              </div>
+            
+            <span className="text-xs  group-hover:text-green-600">Langganan</span>
+            </NavLink>
+
+            {/* Profil */}
+            <NavLink to="/profil" className={navItemClass}>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <span className="text-[11px] font-medium">Profil</span>
+            </NavLink>
+        </div>
       </div>
+  
+      </div>
+
     </>
   );
 };
