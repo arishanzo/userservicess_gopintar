@@ -38,11 +38,6 @@ const Login = () => {
       await login(userResponse.data);
       
       setStatus("Login berhasil. Mengalihkan ke dashboard...");
-
-       const profil = await  axiosClient.get(`/api/profile/${userResponse.data?.iduser}`);
-      
-      localStorage.setItem("photoprofil", profil.data.data?.foto_profil);
-
       
       setTimeout(() => {
         navigate("/dashboard");
