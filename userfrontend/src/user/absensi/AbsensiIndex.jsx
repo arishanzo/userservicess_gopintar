@@ -9,7 +9,7 @@ const AbsensiIndex = () => {
   return (
 
     <>
-  <div className="flex bg-green-10">
+  <div className="flex bg-gradient-to-r from-green-50 via-indigo-10 to-purple-50">
 
     {/* Sidebar & Nabvar */}
      <SideNav />

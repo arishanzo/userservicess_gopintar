@@ -31,6 +31,7 @@ const CardLangganan = () => {
                             src="https://lottie.host/9e33d5c6-ff1e-4897-8069-ed63546f8e6d/k5fkgTOyUR.lottie"
                             loop
                             autoplay
+                          
                         />
                     </div>
                 </div>
@@ -38,9 +39,7 @@ const CardLangganan = () => {
                 <div className="p-8 border border-gray-200 bg-white rounded-2xl shadow-xl ">
                     <div className="flex-1">
                         <h3 className="text-xl font-semibold">Paket Belajar</h3>
-                        <p className="absolute top-0 py-1.5 px-4 bg-emerald-500 text-white rounded-full text-xs font-semibold uppercase tracking-wide transform -translate-y-1/2">
-                            Terpopuler
-                        </p>
+                     
                         <p className="mt-4 flex items-baseline">
                             <span className="md:text-5xl text-3xl font-extrabold tracking-tight">Rp355.000</span>
                             <span className="ml-1 md:text-xl text-lg font-semibold">/ 15 Pertemuan</span>

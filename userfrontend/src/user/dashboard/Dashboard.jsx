@@ -11,6 +11,7 @@ import { UseGetGuru } from "../../hook/useGetGuru";
 import { UseGetProfil } from "../../hook/useGetProfil";
 import { UseGetRatingGuru } from "../../hook/useGetRatingGuru";
 import { UseGetBookingAll } from "../../hook/useGetBookingAll";
+import { NavLink } from "react-router-dom";
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -145,14 +146,14 @@ const Dashboard = () => {
             className="group cursor-pointer"
           >
             <div className={`${item.color} border-2 rounded-2xl p-4 hover:shadow-lg active:scale-95 transition-all duration-200`}>
-              <a href={item.link} className="text-center">
+              <NavLink to={item.link} className="text-center"  preload="true">
                 <div className="text-2xl mb-3 group-hover:scale-110 transition-transform duration-200">
                   {item.icon}
                 </div>
                 <h3 className="text-gray-700 font-medium text-xs md:text-sm leading-tight">
                   {item.judul}
                 </h3>
-              </a>
+              </NavLink>
             </div>
           </div>
         ))}
