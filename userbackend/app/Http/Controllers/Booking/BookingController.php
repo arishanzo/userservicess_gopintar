@@ -11,6 +11,20 @@ use Illuminate\Support\Facades\Log;
 
 class BookingController extends Controller
 {
+
+    public function bookingGetAll(){
+
+           $booking = Booking::with('User_Login', 'Tgl_Booking_Kelas')->get();
+         
+
+             return response()->json([
+            'status' => 200,
+            'data' => $booking,
+            'message' => $booking ? 'Booking Ada' : 'Booking Tidak Ada'
+        ]);
+
+    }
+
     public function bookingGet($iduser){
 
            $booking = Booking::with('User_Login', 'Tgl_Booking_Kelas')->where('iduser', $iduser)->get();

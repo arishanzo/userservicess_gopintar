@@ -139,6 +139,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/booking/{iduser}', [BookingController::class, 'bookingGet']);
     Route::post('/booking', [BookingController::class, 'booking']);
     Route::put('/booking/{idBookingPrivate}', [BookingController::class, 'bookingPutGuru']);
+    
+    Route::get('/bookingall', [BookingController::class, 'bookingGetAll']);
 
     Route::get('/tglbooking/{iduser}', [BookingController::class, 'tglbookingGet']);
     Route::post('/tglbooking', [BookingController::class, 'tglbookingCreate']);

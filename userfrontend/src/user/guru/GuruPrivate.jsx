@@ -44,14 +44,12 @@ const KabupatenName = ({ kecamatanId, kabupatenId }) => {
 };
 
 
-const GuruPrivate = ( { result, profil, booking, guru, ratingGuru }) => {
+const GuruPrivate = ( { result, profil, booking, guru, ratingGuru, BookingAll}) => {
    const [kategori, setKategori] = useState("Filter");
 
   const [showModal, setShowModal] = useState(false);
   
   const [showModalBooking, setShowModalBooking] = useState(false);
-
-
 
   const queryParams = new URLSearchParams(window.location.search);
  const query = queryParams.get('cariguru') || '';
@@ -153,7 +151,7 @@ const GuruPrivate = ( { result, profil, booking, guru, ratingGuru }) => {
   {/* Loading state */}
         {!guru ? (
           
-     <div className=" px-2 md:px-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-10">
+     <div className=" px-2 md:px-8 grid grid-cols-2 py-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-10">
             {[...Array(20)].map((_, i) => (
               <div key={i} className="flex-shrink-0 w-40 py-4">
                 <div className="bg-white rounded-xl shadow-lg">
@@ -255,6 +253,7 @@ const GuruPrivate = ( { result, profil, booking, guru, ratingGuru }) => {
                   onError={(e) => {
                     e.target.src = 'https://via.placeholder.com/300';
                   }}
+                  loading="lazy" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-green-700 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
@@ -278,13 +277,29 @@ const GuruPrivate = ( { result, profil, booking, guru, ratingGuru }) => {
                 <p className="text-sm text-gray-700 mb-3">
                   {mentor.text || "Experienced mentor with years of teaching expertise."}
                 </p>
-                <button 
+
+                {  BookingAll?.find((item) => item.idprofilguru === mentor?.idprofilguru) ? (
+                 <button 
+                type="button"
+                hidden={result?.idprofilguru === mentor?.idprofilguru}
+               disabled
+                className="w-full bg-yellow-600 hover:bg-yellow-500 text-white text-xs py-2 px-3 rounded-lg transition-colors duration-200">
+                  Guru Aktif
+                </button>
+                ): (
+                    <>
+                    <button 
                 type="button"
                 hidden={result?.idprofilguru === mentor?.idprofilguru}
                 onClick={() => handleSubmit(mentor?.idprofilguru || '')}
                 className="w-full bg-green-600 hover:bg-green-700 text-white text-xs py-2 px-3 rounded-lg transition-colors duration-200">
                   Pilih Guru 
                 </button>
+                </>
+                  )
+                  
+                  }
+              
               </div>
             </div>
           </div>

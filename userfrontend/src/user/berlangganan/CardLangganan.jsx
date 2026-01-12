@@ -6,7 +6,7 @@ const CardLangganan = () => {
     const navigate = useNavigate();
     
     return (
-        <div className=" md:pt-24 pt-16 py-16  ">
+        <div className=" md:pt-24 pt-16 md:pt-0 py-16  ">
             <div className='py-4'>
                   <div className="flex items-center space-x-8 md:pl-8 py-2 md:py-4">
                 <button
@@ -25,7 +25,7 @@ const CardLangganan = () => {
             </div>
             
             <div className=" space-y-12 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-x-8">
-                <div className="relative border border-gray-200 rounded-2xl shadow-sm flex flex-col">
+                <div className="relative border border-gray-200 bg-white rounded-2xl shadow-xl flex flex-col">
                     <div className="flex-1 h-96 md:h-full">
                         <DotLottieReact
                             src="https://lottie.host/9e33d5c6-ff1e-4897-8069-ed63546f8e6d/k5fkgTOyUR.lottie"
@@ -35,7 +35,7 @@ const CardLangganan = () => {
                     </div>
                 </div>
                 
-                <div className="p-8 border border-gray-200 rounded-2xl shadow-sm ">
+                <div className="p-8 border border-gray-200 bg-white rounded-2xl shadow-xl ">
                     <div className="flex-1">
                         <h3 className="text-xl font-semibold">Paket Belajar</h3>
                         <p className="absolute top-0 py-1.5 px-4 bg-emerald-500 text-white rounded-full text-xs font-semibold uppercase tracking-wide transform -translate-y-1/2">

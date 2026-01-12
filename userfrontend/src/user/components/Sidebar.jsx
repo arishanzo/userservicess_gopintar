@@ -19,9 +19,9 @@ const Sidebar = () => {
  
   
   return (
-    <div className={` hidden sm:flex flex-col z-50 bg-white shadow-xl border-r border-gray-200 transition-all duration-300 ${
+    <div className={` hidden sm:flex flex-col z-50 bg-gradient-to-r from-green-50 via-indigo-10 to-purple-50 shadow-xl border-r border-gray-200 transition-all duration-300 ${
       isCollapsed ? 'w-16' : 'md:w-64'
-    } min-h-screen`}>
+    } min-h-screen `}>
       
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-gray-200">
@@ -44,7 +44,7 @@ const Sidebar = () => {
     
 
       {/* Main Menu */}
-      <nav className="flex-1 p-4 space-y-2">
+      <nav className="flex-1 p-4 space-y-2 ">
         {menuItems.map((item) => (
           <NavLink
             key={item.path}

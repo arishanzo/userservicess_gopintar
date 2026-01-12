@@ -10,10 +10,12 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { UseGetProfil } from "../../hook/useGetProfil";
 import { UseGetBooking } from "../../hook/kelas/useGetBooking";
 import { UseGetRatingGuru } from "../../hook/useGetRatingGuru";
+import { UseGetBookingAll } from "../../hook/useGetBookingAll";
 const Guru = () => {
     const { user } = useAuth();
     const { profil } = UseGetProfil(user?.iduser || '');
 
+    const { BookingAll } = UseGetBookingAll();
 
     const { result, loading } = UseGetOrder(user?.iduser);
     const { booking } = UseGetBooking(user?.iduser || '');
@@ -24,7 +26,7 @@ const Guru = () => {
   return (
 
     <>
-  <div className="flex bg-green-10">
+  <div className="flex bg-gradient-to-r from-green-50 via-indigo-10 to-purple-50">
 
     {/* Sidebar & Nabvar */}
      <SideNav />
@@ -76,12 +78,27 @@ const Guru = () => {
         </div>
       ))}
     </div>
+
+         <div className=" px-2 md:px-8 grid grid-cols-2 py-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-10">
+            {[...Array(20)].map((_, i) => (
+              <div key={i} className="flex-shrink-0 w-40 py-4">
+                <div className="bg-white rounded-xl shadow-lg">
+                  <div className="animate-pulse bg-gray-300 rounded-xl h-40 w-40"></div>
+                  <div className="p-4 space-y-2">
+                    <div className="animate-pulse bg-gray-300 h-4 rounded"></div>
+                    <div className="animate-pulse bg-gray-300 h-3 w-3/4 rounded"></div>
+                    <div className="animate-pulse bg-gray-300 h-3 w-1/2 rounded"></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
   </>
 
 
 ) : (
   <>
-        <div className="flex items-center space-x-2 md:pl-8 py-2 mb-2 md:py-4">
+        <div className="flex items-center space-x-2 md:pl-8 py-2 mb-2 ">
       <button
         onClick={() => window.history.back()}
         className="flex items-center space-x-2 px-4 py-2 bg-green-100 hover:bg-green-200 text-green-700 rounded-md"
@@ -91,7 +108,7 @@ const Guru = () => {
    
       </div>
                   <Category/>
-            <GuruPrivate  result={result} guru={guru}  user={user} profil={profil} ratingGuru={ratingGuru} booking={booking}/>
+            <GuruPrivate  result={result} guru={guru}  user={user} profil={profil} ratingGuru={ratingGuru} booking={booking} BookingAll={BookingAll}/>
             </>
 )}
 

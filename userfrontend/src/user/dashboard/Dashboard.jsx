@@ -10,10 +10,12 @@ import { UseGetBooking } from "../../hook/kelas/useGetBooking";
 import { UseGetGuru } from "../../hook/useGetGuru";
 import { UseGetProfil } from "../../hook/useGetProfil";
 import { UseGetRatingGuru } from "../../hook/useGetRatingGuru";
+import { UseGetBookingAll } from "../../hook/useGetBookingAll";
 
 const Dashboard = () => {
     const { user } = useAuth();
     const { profil } = UseGetProfil(user?.iduser || '');
+
     
      const { booking } = UseGetBooking(user?.iduser) ;
      const { result, loading  } = UseGetOrder(user?.iduser);
@@ -23,11 +25,14 @@ const Dashboard = () => {
     const { ratingGuru } =  UseGetRatingGuru();
 
     
+    const { BookingAll } = UseGetBookingAll();
+
+    
     const data = getDataMenu();
   return (
 
     <>
-  <div className="flex bg-green-10">
+  <div className="flex bg-gradient-to-r from-green-50 via-indigo-10 to-purple-50">
 
     {/* Sidebar & Nabvar */}
      <SideNav />
@@ -153,7 +158,7 @@ const Dashboard = () => {
         ))}
       </div>
 
-            <GuruPrivate result={result} user={user} profil={profil} booking={booking} ratingGuru={ratingGuru} guru={guru}/>
+            <GuruPrivate result={result} user={user} profil={profil} booking={booking} ratingGuru={ratingGuru} guru={guru} BookingAll={BookingAll}/>
         </div>
 
         
