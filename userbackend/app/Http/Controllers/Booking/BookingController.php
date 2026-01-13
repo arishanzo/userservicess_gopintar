@@ -300,6 +300,30 @@ class BookingController extends Controller
             }
         }
             
+         public function destroyTglBooking($iduser){
+        try {
+        $data = TglBooking::where('iduser', $iduser)->first();
         
+        if (!$data) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
+        
+        $data->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'berhasil dihapus',
+        ], 200);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Gagal menghapus',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+    }
    
 }

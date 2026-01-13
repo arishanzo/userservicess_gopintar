@@ -147,6 +147,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/tglbooking/{idtglbooking}', [BookingController::class, 'tglbookingUpdate']);
     Route::put('/puttglbooking/{idtglbooking}', [BookingController::class, 'updateNextDays']);
 
+    
+    Route::delete('/tglbooking/{iduser}', [BookingController::class, 'destroyTglBooking']);
+    
     // Get notifications
     Route::get('/notifications', function (Request $request) {
         return response()->json($request->user()->notifications);
